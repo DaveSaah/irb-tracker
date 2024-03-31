@@ -4,6 +4,8 @@
 
 * {
   margin: 0;
+  /* remove the scrollbar */
+  scrollbar-width: none;
 }
 
 .htmx-indicator {
