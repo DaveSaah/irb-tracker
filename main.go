@@ -34,6 +34,10 @@ func main() {
 		return c.Render(200, "index", nil)
 	})
 
+	e.GET("/home", func(c echo.Context) error {
+		return c.Render(200, "home", nil)
+	})
+
 	// start server with logger
 	e.Logger.Fatal(e.Start(":42069"))
 }

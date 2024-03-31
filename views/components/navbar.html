@@ -1,0 +1,27 @@
+{{ block "navbar" . }}
+<nav
+  class="flex py-3 px-4 justify-center items-center border-b-4 border-b-primary-blue shadow-md text-lg"
+>
+  <div class="grow font-semibold">
+    <div class="flex items-center">
+      <span>
+        <img
+          src="images/logo.svg"
+          alt="irb logo"
+          class="object-contain w-12 h-12"
+        />
+      </span>
+      <span> IRB Tracker </span>
+    </div>
+  </div>
+  <div class="flex gap-x-3">
+    <button hx-get="/home" hx-target="#main" class="hover:text-blue-500">
+      Home
+    </button>
+    <button class="hover:text-blue-500">Login</button>
+    <button hx-get="/register" hx-target="#main" class="hover:text-blue-500">
+      Register
+    </button>
+  </div>
+</nav>
+{{ end }}
