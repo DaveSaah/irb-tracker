@@ -1,0 +1,156 @@
+{{ block "register" . }}
+<div class="py-8">
+  <h1 class="text-center font-semibold text-4xl">Register</h1>
+  <form
+    hx-post="/register"
+    class="flex flex-col justify-center items-center pt-6 w-full gap-y-4"
+  >
+    <div class="flex justify-center items-center">
+      <input
+        type="text"
+        name="fname"
+        placeholder="First name"
+        class="p-2 m-2 border-2 border-gray-300 rounded-md w-96"
+        minlength="3"
+        required
+      />
+      <input
+        type="text"
+        name="lname"
+        placeholder="Last name"
+        class="p-2 m-2 border-2 border-gray-300 rounded-md w-96"
+        minlength="3"
+        required
+      />
+    </div>
+    <div class="flex justify-center items-center">
+      <select
+        name="dept"
+        class="p-2 m-2 border-2 border-gray-300 rounded-md w-96"
+        required
+      >
+        <option value="">-- select your department --</option>
+        {{ range .Depts }}
+        <option value="{{ .ID }}">{{ .Name }}</option>
+        {{ end }}
+      </select>
+      <div>
+        <input
+          hx-post="/register/email"
+          hx-target="#mail_error"
+          hx-trigger="keyup changed delay:500ms"
+          type="email"
+          name="email"
+          placeholder="Email"
+          class="p-2 m-2 border-2 border-gray-300 rounded-md w-96"
+          required
+        />
+        <p class="text-red-500 indent-5" id="mail_error"></p>
+      </div>
+    </div>
+    <div class="flex flex-col">
+      <label for="type">What type of user are you?</label> <br />
+      <div class="indent-5">
+        <input
+          type="radio"
+          id="student"
+          name="type"
+          value="student"
+          required
+          hx-post="/register/student"
+          hx-target="#student-info"
+          hx-trigger="click"
+        />
+        <label for="student">Student</label>
+      </div>
+      <br />
+      <div class="indent-5">
+        <input
+          type="radio"
+          id="faculty"
+          name="type"
+          value="faculty"
+          required
+          hx-post="/register/student"
+          hx-target="#student-info"
+          hx-trigger="click"
+        />
+        <label for="faculty">Faculty</label>
+      </div>
+    </div>
+    <div id="student-info"></div>
+    <div>
+      <div>
+        <input
+          type="password"
+          name="passwd1"
+          placeholder="Password"
+          class="p-2 m-2 border-2 border-gray-300 rounded-md w-96"
+          minlength="8"
+          required
+        />
+        <input
+          type="password"
+          name="passwd2"
+          placeholder="Re-enter password"
+          class="p-2 m-2 border-2 border-gray-300 rounded-md w-96"
+          hx-post="/register/passwd"
+          hx-target="#passwd-not-equal"
+          hx-trigger="keyup changed delay:500ms"
+          minlength="8"
+          required
+        />
+      </div>
+      <p class="text-center text-red-500" id="passwd-not-equal"></p>
+    </div>
+    <input
+      type="submit"
+      value="Register"
+      class="p-2 m-2 border-2 border-gray-300 rounded-md w-72 cursor-pointer bg-primary-blue transition ease-in delay-100 duration-800 hover:bg-blue-500 hover:text-white"
+    />
+  </form>
+</div>
+{{ end }}
+
+<!---->
+
+{{ block "mail_error" . }} {{ .MailError }} {{ end }}
+
+<!---->
+
+{{ block "passwd_error" . }} {{ .PasswdError }} {{ end }}
+
+<!---->
+
+{{ block "student_info" . }}
+<select
+  name="major"
+  class="p-2 m-2 border-2 border-gray-300 rounded-md w-96"
+  required
+>
+  <option value="">-- select your major --</option>
+  {{ range .Majors}}
+  <option value="{{ .ID }}">{{ .Name }}</option>
+  {{ end }}
+</select>
+<input
+  type="number"
+  name="year_group"
+  placeholder="Year group"
+  class="p-2 m-2 border-2 border-gray-300 rounded-md w-32"
+  max="{{ .YearGroupMax }}"
+  min="{{ .YearGroupMin }}"
+  required
+/>
+<input
+  type="text"
+  name="student_id"
+  placeholder="Student ID"
+  class="p-2 m-2 border-2 border-gray-300 rounded-md w-64"
+  minlength="8"
+  maxlength="8"
+  title="Student ID must be 8 digits"
+  pattern="[0-9]{8}"
+  required
+/>
+{{ end }}
