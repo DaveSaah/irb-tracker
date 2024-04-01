@@ -5,12 +5,12 @@
     hx-post="/register"
     class="flex flex-col justify-center items-center pt-6 w-full gap-y-4"
   >
-    <div class="flex justify-center items-center">
+    <div class="flex flex-col md:flex-row justify-center items-center">
       <input
         type="text"
         name="fname"
         placeholder="First name"
-        class="p-2 m-2 border-2 border-gray-300 rounded-md w-96"
+        class="p-2 m-2 border-2 border-gray-300 rounded-md w-80 sm:w-96"
         minlength="3"
         required
       />
@@ -18,18 +18,18 @@
         type="text"
         name="lname"
         placeholder="Last name"
-        class="p-2 m-2 border-2 border-gray-300 rounded-md w-96"
+        class="p-2 m-2 border-2 border-gray-300 rounded-md w-80 sm:w-96"
         minlength="3"
         required
       />
     </div>
-    <div class="flex justify-center items-center">
+    <div class="flex flex-col md:flex-row justify-center items-center">
       <select
         name="dept"
-        class="p-2 m-2 border-2 border-gray-300 rounded-md w-96"
+        class="p-2 m-2 border-2 border-gray-300 rounded-md w-80 sm:w-96"
         required
       >
-        <option value="">-- select your department --</option>
+        <option classvalue="">-- select your department --</option>
         {{ range .Depts }}
         <option value="{{ .ID }}">{{ .Name }}</option>
         {{ end }}
@@ -42,7 +42,7 @@
           type="email"
           name="email"
           placeholder="Email"
-          class="p-2 m-2 border-2 border-gray-300 rounded-md w-96"
+          class="p-2 m-2 border-2 border-gray-300 rounded-md w-80 sm:w-96"
           required
         />
         <p class="text-red-500 indent-5" id="mail_error"></p>
@@ -78,29 +78,30 @@
         <label for="faculty">Faculty</label>
       </div>
     </div>
-    <div id="student-info"></div>
-    <div>
-      <div>
-        <input
-          type="password"
-          name="passwd1"
-          placeholder="Password"
-          class="p-2 m-2 border-2 border-gray-300 rounded-md w-96"
-          minlength="8"
-          required
-        />
-        <input
-          type="password"
-          name="passwd2"
-          placeholder="Re-enter password"
-          class="p-2 m-2 border-2 border-gray-300 rounded-md w-96"
-          hx-post="/register/passwd"
-          hx-target="#passwd-not-equal"
-          hx-trigger="keyup changed delay:500ms"
-          minlength="8"
-          required
-        />
-      </div>
+    <div
+      id="student-info"
+      class="flex flex-col md:flex-row justify-center items-center"
+    ></div>
+    <div class="flex flex-col md:flex-row justify-center items-center">
+      <input
+        type="password"
+        name="passwd1"
+        placeholder="Password"
+        class="p-2 m-2 border-2 border-gray-300 rounded-md w-80 sm:w-96"
+        minlength="8"
+        required
+      />
+      <input
+        type="password"
+        name="passwd2"
+        placeholder="Re-enter password"
+        class="p-2 m-2 border-2 border-gray-300 rounded-md w-80 sm:w-96"
+        hx-post="/register/passwd"
+        hx-target="#passwd-not-equal"
+        hx-trigger="keyup changed delay:500ms"
+        minlength="8"
+        required
+      />
       <p class="text-center text-red-500" id="passwd-not-equal"></p>
     </div>
     <input
@@ -125,7 +126,7 @@
 {{ block "student_info" . }}
 <select
   name="major"
-  class="p-2 m-2 border-2 border-gray-300 rounded-md w-96"
+  class="p-2 m-2 border-2 border-gray-300 rounded-md w-80 sm:w-96"
   required
 >
   <option value="">-- select your major --</option>
@@ -133,24 +134,26 @@
   <option value="{{ .ID }}">{{ .Name }}</option>
   {{ end }}
 </select>
-<input
-  type="number"
-  name="year_group"
-  placeholder="Year group"
-  class="p-2 m-2 border-2 border-gray-300 rounded-md w-32"
-  max="{{ .YearGroupMax }}"
-  min="{{ .YearGroupMin }}"
-  required
-/>
-<input
-  type="text"
-  name="student_id"
-  placeholder="Student ID"
-  class="p-2 m-2 border-2 border-gray-300 rounded-md w-64"
-  minlength="8"
-  maxlength="8"
-  title="Student ID must be 8 digits"
-  pattern="[0-9]{8}"
-  required
-/>
+<div class="flex flex-col sm:flex-row justify-center items-center">
+  <input
+    type="number"
+    name="year_group"
+    placeholder="Year group"
+    class="p-2 m-2 border-2 border-gray-300 rounded-md w-32"
+    max="{{ .YearGroupMax }}"
+    min="{{ .YearGroupMin }}"
+    required
+  />
+  <input
+    type="text"
+    name="student_id"
+    placeholder="Student ID"
+    class="p-2 m-2 border-2 border-gray-300 rounded-md w-64"
+    minlength="8"
+    maxlength="8"
+    title="Student ID must be 8 digits"
+    pattern="[0-9]{8}"
+    required
+  />
+</div>
 {{ end }}
