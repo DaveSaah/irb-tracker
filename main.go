@@ -1,8 +1,10 @@
 package main
 
 import (
+	"strconv"
 	"time"
 
+	"github.com/boring-school-work/irb-tracker/actions"
 	"github.com/boring-school-work/irb-tracker/functions"
 	"github.com/boring-school-work/irb-tracker/helpers"
 	"github.com/boring-school-work/irb-tracker/model"
@@ -71,14 +73,14 @@ func main() {
 	})
 
 	e.POST("/register/student", func(c echo.Context) error {
-		majors, err := functions.FetchMajors()
-		if err != nil {
-			return err
-		}
-
 		user_type := c.FormValue("type")
 
 		if user_type == "student" {
+			majors, err := functions.FetchMajors()
+			if err != nil {
+				return err
+			}
+
 			return c.Render(200, "student_info",
 				&StudentData{
 					Majors:       majors,
@@ -104,7 +106,42 @@ func main() {
 	})
 
 	e.POST("/register", func(c echo.Context) error {
-		return nil
+		fname := c.FormValue("fname")
+		lname := c.FormValue("lname")
+		email := c.FormValue("email")
+		passwd := c.FormValue("passwd2")
+		dept_id, _ := strconv.Atoi(c.FormValue("dept"))
+		user_type := c.FormValue("type")
+
+		user := &model.User{
+			FName:  fname,
+			LName:  lname,
+			Email:  email,
+			Passwd: passwd,
+			DeptID: dept_id,
+		}
+
+		if user_type == "student" {
+			major, _ := strconv.Atoi(c.FormValue("major"))
+			year, _ := strconv.Atoi(c.FormValue("year_group"))
+			student_id := c.FormValue("student_id")
+
+			student := &model.Student{
+				StudentID: student_id,
+				MajorID:   major,
+				YearGroup: year,
+			}
+
+			user.AddStudent(student)
+
+		}
+
+		err := actions.RegisterUser(user, user_type)
+		if err != nil {
+			return err
+		}
+
+		return nil // TODO: Redirect to login page
 	})
 
 	// start server with logger
