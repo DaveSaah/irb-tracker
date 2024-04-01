@@ -20,8 +20,11 @@ func main() {
 	register.GET("", handlers.RegisterView)
 	register.POST("/email", handlers.RegisterEmailValidate)
 	register.POST("/student", handlers.RegisterStudentView)
-	register.POST("/passwd", handlers.RegisterPasswdView)
+	register.POST("/passwd", handlers.RegisterPasswdValidate)
 	register.POST("", handlers.RegisterUser)
+
+	e.GET("/login", handlers.LoginView)
+	e.POST("/login", handlers.LoginUser)
 
 	// start server with logger
 	e.Logger.Fatal(e.Start(":42069"))
