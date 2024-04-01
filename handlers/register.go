@@ -12,36 +12,30 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type Department struct {
-	Depts []model.Department
+type registerData struct {
+	MailError   string
+	PasswdError string
+	Depts       []model.Department
 }
 
-type StudentData struct {
+type studentData struct {
 	Majors       []model.Major
 	YearGroupMax int
 	YearGroupMin int
 }
 
-type Error struct {
-	MailError   string
-	PasswdError string
-}
+var depts, _ = functions.FetchDepts()
 
 // RegisterView renders the registration page
 func RegisterView(c echo.Context) error {
-	depts, err := functions.FetchDepts()
-	if err != nil {
-		return err
-	}
-
-	return c.Render(http.StatusOK, "register", &Department{Depts: depts})
+	return c.Render(http.StatusOK, "register", &registerData{Depts: depts})
 }
 
 // RegisterEmailValidate validates the email used to register
 func RegisterEmailValidate(c echo.Context) error {
 	email := c.FormValue("email")
 	if ok := helpers.IsMailValid(email); !ok {
-		return c.Render(http.StatusOK, "mail_error", &Error{MailError: "Invalid email"})
+		return c.Render(http.StatusOK, "mail_error", &registerData{MailError: "Invalid email"})
 	}
 
 	exists, err := functions.DoesMailExist(email)
@@ -50,7 +44,7 @@ func RegisterEmailValidate(c echo.Context) error {
 	}
 	if exists {
 		return c.Render(http.StatusOK, "mail_error",
-			&Error{MailError: "Email already exists"},
+			&registerData{MailError: "Email already exists"},
 		)
 	}
 
@@ -67,7 +61,7 @@ func RegisterStudentView(c echo.Context) error {
 		}
 
 		return c.Render(http.StatusOK, "student_info",
-			&StudentData{
+			&studentData{
 				Majors:       majors,
 				YearGroupMin: time.Now().Year(),
 				YearGroupMax: time.Now().Year() + 4,
@@ -78,13 +72,13 @@ func RegisterStudentView(c echo.Context) error {
 }
 
 // RegisterPasswdView validates the password used to register
-func RegisterPasswdView(c echo.Context) error {
+func RegisterPasswdValidate(c echo.Context) error {
 	passwd1 := c.FormValue("passwd1")
 	passwd2 := c.FormValue("passwd2")
 
 	if passwd2 != "" && passwd1 != passwd2 {
 		return c.Render(http.StatusOK, "passwd_error",
-			&Error{PasswdError: "Passwords do not match"},
+			&registerData{PasswdError: "Passwords do not match"},
 		)
 	}
 
@@ -93,12 +87,30 @@ func RegisterPasswdView(c echo.Context) error {
 
 // RegisterUser registers a user
 func RegisterUser(c echo.Context) error {
+	// create a delay to interactivity with the user
+	// time.Sleep(500 * time.Millisecond)
+
+	email := c.FormValue("email")
+
+	// check if email exists
+	exists, err := functions.DoesMailExist(email)
+	if err != nil {
+		return err
+	}
+	if exists {
+		return c.Render(http.StatusOK, "register",
+			&registerData{
+				MailError: "Email already exists, try again",
+				Depts:     depts,
+			},
+		)
+	}
+
 	fname := c.FormValue("fname")
 	lname := c.FormValue("lname")
-	email := c.FormValue("email")
 	passwd := c.FormValue("passwd2")
-	dept_id, _ := strconv.Atoi(c.FormValue("dept"))
 	user_type := c.FormValue("type")
+	dept_id, _ := strconv.Atoi(c.FormValue("dept"))
 
 	user := &model.User{
 		FName:  fname,
@@ -106,6 +118,7 @@ func RegisterUser(c echo.Context) error {
 		Email:  email,
 		Passwd: passwd,
 		DeptID: dept_id,
+		Type:   user_type,
 	}
 
 	if user_type == "student" {
@@ -121,10 +134,10 @@ func RegisterUser(c echo.Context) error {
 		user.AddStudent(student)
 	}
 
-	err := actions.RegisterUser(user, user_type)
+	err = actions.RegisterUser(user)
 	if err != nil {
 		return err
 	}
 
-	return nil // TODO: Redirect to login page
+	return c.Render(http.StatusOK, "login", nil)
 }
