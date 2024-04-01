@@ -9,7 +9,7 @@ import (
 )
 
 // RegisterUser registers a new user
-func RegisterUser(u *model.User, user_type string) error {
+func RegisterUser(u *model.User) error {
 	conn, err := db.Init()
 	if err != nil {
 		log.Printf("Error initializing db: %s", err)
@@ -40,9 +40,9 @@ func RegisterUser(u *model.User, user_type string) error {
 
 	// execute first transaction
 	res, err := tx.Exec(
-		`INSERT INTO users(fname, lname, email, passwd, dept) 
-    VALUES(?, ?, ?, ?, ?)`,
-		u.FName, u.LName, u.Email, u.Passwd, u.DeptID,
+		`INSERT INTO users(fname, lname, email, passwd, dept, user_type) 
+    VALUES(?, ?, ?, ?, ?, ?)`,
+		u.FName, u.LName, u.Email, u.Passwd, u.DeptID, u.Type,
 	)
 	if err != nil {
 		log.Printf("Cannot insert user information: %s\n", err)
@@ -52,7 +52,7 @@ func RegisterUser(u *model.User, user_type string) error {
 	// get last inserted id
 	user_id, _ := res.LastInsertId()
 
-	if user_type == "student" {
+	if u.Type == "student" {
 		// add student info
 		_, err = tx.Exec(
 			`INSERT INTO student(id, student_id, major, year_group)
