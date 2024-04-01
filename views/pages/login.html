@@ -1,0 +1,43 @@
+{{ block "login" . }}
+<div class="py-8">
+  <h1 class="text-center font-semibold text-4xl pb-3">Login</h1>
+  <p class="text-center text-red-500 text-lg">{{ .Error }}</p>
+  <form
+    hx-post="/login"
+    hx-indicator="#spinner"
+    hx-target="#main"
+    class="flex flex-col justify-center items-center pt-3 w-full gap-y-2"
+  >
+    <input
+      type="email"
+      name="email"
+      placeholder="Email"
+      class="p-2 m-2 border-2 border-gray-300 rounded-md w-80 sm:w-96"
+      value="{{ if .Email }}{{ .Email }}{{ end }}"
+      required
+    />
+    <input
+      type="password"
+      name="passwd"
+      placeholder="Password"
+      class="p-2 m-2 border-2 border-gray-300 rounded-md w-80 sm:w-96"
+      minlength="8"
+      value="{{ if .Passwd }}{{ .Passwd }}{{ end }}"
+      required
+    />
+    <div class="flex items-center justify-center">
+      <input
+        type="submit"
+        value="Login"
+        class="p-2 m-2 border-2 border-gray-300 rounded-md w-52 cursor-pointer bg-primary-blue transition ease-in delay-100 duration-800 hover:bg-blue-500 hover:text-white"
+      />
+      <img
+        id="spinner"
+        src="images/bars.svg"
+        alt="loading"
+        class="htmx-indicator w-4"
+      />
+    </div>
+  </form>
+</div>
+{{ end }}
