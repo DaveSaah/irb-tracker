@@ -5,3 +5,8 @@ type Department struct {
 	Name string
 	ID   int
 }
+
+type Major struct {
+	Name string
+	ID   int
+}
