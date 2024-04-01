@@ -10,3 +10,18 @@ type Major struct {
 	Name string
 	ID   int
 }
+type Student struct {
+	StudentID string
+	MajorID   int
+	YearGroup int
+}
+
+type User struct {
+	StudentUser *Student
+	FName       string
+	LName       string
+	Email       string
+	Passwd      string
+	DeptID      int
+}
+
