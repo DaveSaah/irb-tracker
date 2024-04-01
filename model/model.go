@@ -10,6 +10,7 @@ type Major struct {
 	Name string
 	ID   int
 }
+
 type Student struct {
 	StudentID string
 	MajorID   int
@@ -25,3 +26,12 @@ type User struct {
 	DeptID      int
 }
 
+// AddStudent adds a student to the user
+func (u *User) AddStudent(s *Student) {
+	u.StudentUser = s
+}
+
+// AddPasswdHash replaces the user's password with the provided hash
+func (u *User) AddPasswdHash(hash string) {
+	u.Passwd = hash
+}
