@@ -15,6 +15,8 @@ func FetchDepts() ([]model.Department, error) {
 		return nil, err
 	}
 
+	defer conn.Close()
+
 	rows, err := conn.Query("SELECT * FROM department")
 	if err != nil {
 		log.Println("Error fetching depts: ", err)
