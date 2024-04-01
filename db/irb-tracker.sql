@@ -18,6 +18,7 @@ CREATE TABLE users (
 	email varchar(85) NOT NULL UNIQUE,
 	passwd varchar(85) NOT NULL,
 	dept int,
+  user_type varchar(20) NOT NULL,
 	PRIMARY KEY (id),
   foreign key (dept) references department(id)
 );
