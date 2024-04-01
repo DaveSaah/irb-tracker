@@ -23,6 +23,7 @@ type User struct {
 	LName       string
 	Email       string
 	Passwd      string
+	Type        string
 	DeptID      int
 }
 
@@ -34,4 +35,9 @@ func (u *User) AddStudent(s *Student) {
 // AddPasswdHash replaces the user's password with the provided hash
 func (u *User) AddPasswdHash(hash string) {
 	u.Passwd = hash
+}
+
+// ClearPasswd removes the password from the user
+func (u *User) ClearPasswd() {
+	u.Passwd = ""
 }
