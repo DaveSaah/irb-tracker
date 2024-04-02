@@ -2,6 +2,15 @@ root = "."
 tmp_dir = "tmp"
 
 [build]
+include_dir = [
+  "actions",
+  "functions",
+  "handlers",
+  "helpers",
+  "model",
+  "views",
+  ".",
+]
 args_bin = []
 bin = "./tmp/main"
 cmd = "go build -o ./tmp/main main.go"
@@ -12,7 +21,6 @@ exclude_regex = ["_test.go"]
 exclude_unchanged = false
 follow_symlink = false
 full_bin = ""
-include_dir = ["views", "pkg"]
 include_ext = ["go", "html"]
 include_file = []
 kill_delay = "0s"
