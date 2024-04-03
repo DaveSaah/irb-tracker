@@ -35,7 +35,7 @@ func RegisterView(c echo.Context) error {
 func RegisterEmailValidate(c echo.Context) error {
 	email := c.FormValue("email")
 	if ok := helpers.IsMailValid(email); !ok {
-		return c.Render(http.StatusOK, "mail_error", &registerData{MailError: "Invalid email"})
+		return c.Render(http.StatusBadRequest, "mail_error", &registerData{MailError: "Invalid email"})
 	}
 
 	exists, err := functions.DoesMailExist(email)
@@ -43,7 +43,7 @@ func RegisterEmailValidate(c echo.Context) error {
 		return err
 	}
 	if exists {
-		return c.Render(http.StatusOK, "mail_error",
+		return c.Render(http.StatusBadRequest, "mail_error",
 			&registerData{MailError: "Email already exists"},
 		)
 	}
@@ -77,7 +77,7 @@ func RegisterPasswdValidate(c echo.Context) error {
 	passwd2 := c.FormValue("passwd2")
 
 	if passwd2 != "" && passwd1 != passwd2 {
-		return c.Render(http.StatusOK, "passwd_error",
+		return c.Render(http.StatusBadRequest, "passwd_error",
 			&registerData{PasswdError: "Passwords do not match"},
 		)
 	}
@@ -87,9 +87,6 @@ func RegisterPasswdValidate(c echo.Context) error {
 
 // RegisterUser registers a user
 func RegisterUser(c echo.Context) error {
-	// create a delay to interactivity with the user
-	// time.Sleep(500 * time.Millisecond)
-
 	email := c.FormValue("email")
 
 	// check if email exists
@@ -98,7 +95,7 @@ func RegisterUser(c echo.Context) error {
 		return err
 	}
 	if exists {
-		return c.Render(http.StatusOK, "register",
+		return c.Render(http.StatusBadRequest, "register",
 			&registerData{
 				MailError: "Email already exists, try again",
 				Depts:     depts,
