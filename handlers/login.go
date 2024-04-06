@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/boring-school-work/irb-tracker/actions"
+	"github.com/boring-school-work/irb-tracker/helpers"
 	"github.com/labstack/echo/v4"
 )
 
@@ -16,6 +17,11 @@ type loginData struct {
 
 // LoginView renders the login page
 func LoginView(c echo.Context) error {
+	sess, isLoggedIn := helpers.CheckSession(c)
+	if isLoggedIn {
+		return c.Render(http.StatusOK, "dashboard", sess)
+	}
+
 	return c.Render(http.StatusOK, "login", nil)
 }
 
@@ -24,7 +30,7 @@ func LoginUser(c echo.Context) error {
 	email := c.FormValue("email")
 	passwd := c.FormValue("passwd")
 
-	_, err := actions.LoginUser(email, passwd)
+	user, err := actions.LoginUser(email, passwd)
 	if err != nil {
 		if strings.Contains(err.Error(), "email") || strings.Contains(err.Error(), "password") {
 			data := loginData{
@@ -39,10 +45,6 @@ func LoginUser(c echo.Context) error {
 		}
 	}
 
-	return c.Render(http.StatusOK, "dashboard", nil)
-
-	// TODO: if email and passwd is correct
-	// 1. create a session
-	// 2. store username and role in session (role -> student/faculty)
-	// 3. redirect to /dashboard
+	sess := helpers.CreateSession(user, c)
+	return c.Render(http.StatusOK, "dashboard", sess)
 }
