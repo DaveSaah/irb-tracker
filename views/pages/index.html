@@ -11,118 +11,118 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body class="bg-primary-bg text-primary-text">
-    {{ template "navbar" . }}
-    <main
-      id="main"
-      class="w-full h-full flex flex-col justify-center items-center px-7"
-    >
-      {{ template "home" . }}
-    </main>
+    {{ template "home" . }}
   </body>
 </html>
 {{ end }}
 
 <!---->
 
-{{ block "home" . }}
-<!-- middle section after navbar -->
-<div class="flex flex-col justify-center items-center pt-8">
-  <h1 class="text-center text-4xl tracking-tighter font-bold sm:text-6xl pb-2">
-    IRB Tracker
-  </h1>
-  <p class="text-xl text-gray-700 max-w-2xl text-center">
-    Streamline your research approval process with the IRB Tracker. Securely
-    manage documents, track submissions, and ensure compliance.
-  </p>
-</div>
-<!--What is an IRB section -->
-<div class="self-start py-36 w-full">
-  <div class="flex lg:justify-around items-center lg:gap-x-2">
-    <div>
-      <h1
-        class="text-start text-4xl tracking-tighter font-bold sm:text-6xl pb-2"
-      >
-        What is an IRB?
-      </h1>
-      <p class="text-xl text-gray-700 max-w-2xl text-start">
-        An Institutional Review Board (IRB) is a committee that reviews and
-        approves research involving human subjects. The primary purpose of the
-        IRB is to protect the rights and welfare of research subjects. IRB
-        approval is required for many types of research, including clinical
-        trials, surveys, and interviews.
-      </p>
-    </div>
-    <div class="w-1/2 h-1/2 hidden lg:block">
-      <img
-        alt="Laptop with standards on the screen"
-        src="images/laptop-standards.webp"
-        class="object-fill rounded-xl"
-      />
+{{ block "home" . }} {{ template "navbar" . }}
+<main
+  id="main"
+  class="w-full h-full flex flex-col justify-center items-center px-7"
+>
+  <div class="flex flex-col justify-center items-center pt-8">
+    <h1
+      class="text-center text-4xl tracking-tighter font-bold sm:text-6xl pb-2"
+    >
+      IRB Tracker
+    </h1>
+    <p class="text-xl text-gray-700 max-w-2xl text-center">
+      Streamline your research approval process with the IRB Tracker. Securely
+      manage documents, track submissions, and ensure compliance.
+    </p>
+  </div>
+  <!--What is an IRB section -->
+  <div class="self-start py-36 w-full">
+    <div class="flex lg:justify-around items-center lg:gap-x-2">
+      <div>
+        <h1
+          class="text-start text-4xl tracking-tighter font-bold sm:text-6xl pb-2"
+        >
+          What is an IRB?
+        </h1>
+        <p class="text-xl text-gray-700 max-w-2xl text-start">
+          An Institutional Review Board (IRB) is a committee that reviews and
+          approves research involving human subjects. The primary purpose of the
+          IRB is to protect the rights and welfare of research subjects. IRB
+          approval is required for many types of research, including clinical
+          trials, surveys, and interviews.
+        </p>
+      </div>
+      <div class="w-1/2 h-1/2 hidden lg:block">
+        <img
+          alt="Laptop with standards on the screen"
+          src="images/laptop-standards.webp"
+          class="object-fill rounded-xl"
+        />
+      </div>
     </div>
   </div>
-</div>
 
-<!--Whu is an IRB important -->
-<div class="self-end pb-36">
-  <div class="flex lg:justify-around items-center">
-    <div class="w-1/2 h-1/2 hidden lg:block">
-      <img
-        alt="IRB Oversight"
-        src="images/irb-oversight.png"
-        class="object-fill rounded-xl"
-      />
-    </div>
-    <div>
-      <h1
-        class="text-start text-4xl tracking-tighter font-bold sm:text-6xl pb-2"
-      >
-        Why is the IRB important?
-      </h1>
-      <p class="text-xl text-gray-700 max-w-2xl text-start">
-        The IRB plays a crucial role in ensuring that research involving human
-        subjects is conducted ethically and in accordance with regulatory
-        requirements. By reviewing research protocols and informed consent
-        procedures, the IRB helps to minimize risks to research participants and
-        uphold the principles of beneficence, justice, and respect for persons.
-        IRB approval is a key component of the research process, providing
-        assurance to participants, researchers, and the broader community that
-        ethical standards are being upheld.
-      </p>
+  <!--Whu is an IRB important -->
+  <div class="self-end pb-36">
+    <div class="flex lg:justify-around items-center">
+      <div class="w-1/2 h-1/2 hidden lg:block">
+        <img
+          alt="IRB Oversight"
+          src="images/irb-oversight.png"
+          class="object-fill rounded-xl"
+        />
+      </div>
+      <div>
+        <h1
+          class="text-start text-4xl tracking-tighter font-bold sm:text-6xl pb-2"
+        >
+          Why is the IRB important?
+        </h1>
+        <p class="text-xl text-gray-700 max-w-2xl text-start">
+          The IRB plays a crucial role in ensuring that research involving human
+          subjects is conducted ethically and in accordance with regulatory
+          requirements. By reviewing research protocols and informed consent
+          procedures, the IRB helps to minimize risks to research participants
+          and uphold the principles of beneficence, justice, and respect for
+          persons. IRB approval is a key component of the research process,
+          providing assurance to participants, researchers, and the broader
+          community that ethical standards are being upheld.
+        </p>
+      </div>
     </div>
   </div>
-</div>
 
-<!--Features section -->
-<div class="pb-16 w-full">
-  <div
-    class="text-center py-4 font-semibold text-4xl sm:text-6xl w-full border-b-2 border-b-gray-300"
-  >
-    Features
+  <!--Features section -->
+  <div class="pb-16 w-full">
+    <div
+      class="text-center py-4 font-semibold text-4xl sm:text-6xl w-full border-b-2 border-b-gray-300"
+    >
+      Features
+    </div>
+    <div
+      class="flex flex-col space-y-8 lg:space-y-0 lg:flex-row lg:justify-around items-center text-center pt-3"
+    >
+      <div class="flex flex-col items-center">
+        <img src="images/document-search.svg" class="w-10 h-10" />
+        <p class="text-2xl font-bold">Document Management</p>
+        <p class="text-gray-500 text-lg">
+          Easily organize and access research documents.
+        </p>
+      </div>
+      <div class="flex flex-col items-center">
+        <img src="images/send.svg" class="w-10 h-10" />
+        <p class="text-2xl font-bold">Submission Tracking</p>
+        <p class="text-gray-500 text-lg">
+          Track the progress of research submissions.
+        </p>
+      </div>
+      <div class="flex flex-col items-center">
+        <img src="images/cert-check.svg" class="w-10 h-10" />
+        <p class="text-2xl font-bold">Compliance Monitoring</p>
+        <p class="text-gray-500 text-lg">
+          Ensure compliance with regulatory requirements.
+        </p>
+      </div>
+    </div>
   </div>
-  <div
-    class="flex flex-col space-y-8 lg:space-y-0 lg:flex-row lg:justify-around items-center text-center pt-3"
-  >
-    <div class="flex flex-col items-center">
-      <img src="images/document-search.svg" class="w-10 h-10" />
-      <p class="text-2xl font-bold">Document Management</p>
-      <p class="text-gray-500 text-lg">
-        Easily organize and access research documents.
-      </p>
-    </div>
-    <div class="flex flex-col items-center">
-      <img src="images/send.svg" class="w-10 h-10" />
-      <p class="text-2xl font-bold">Submission Tracking</p>
-      <p class="text-gray-500 text-lg">
-        Track the progress of research submissions.
-      </p>
-    </div>
-    <div class="flex flex-col items-center">
-      <img src="images/cert-check.svg" class="w-10 h-10" />
-      <p class="text-2xl font-bold">Compliance Monitoring</p>
-      <p class="text-gray-500 text-lg">
-        Ensure compliance with regulatory requirements.
-      </p>
-    </div>
-  </div>
-</div>
+</main>
 {{ end }}

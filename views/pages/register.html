@@ -1,133 +1,138 @@
-{{ block "register" . }}
-<div class="py-8">
-  <h1 class="text-center font-semibold text-4xl">Register</h1>
-  <p class="text-center text-red-500 text-lg">{{ .MailError }}</p>
-  <form
-    hx-post="/register"
-    hx-indicator="#spinner"
-    hx-target="#main"
-    class="flex flex-col justify-center items-center pt-3 w-full gap-y-4"
-  >
-    <div class="flex flex-col md:flex-row justify-center items-center">
-      <input
-        type="text"
-        name="fname"
-        placeholder="First name"
-        class="p-2 m-2 border-2 border-gray-300 rounded-md w-80 sm:w-96"
-        minlength="3"
-        required
-      />
-      <input
-        type="text"
-        name="lname"
-        placeholder="Last name"
-        class="p-2 m-2 border-2 border-gray-300 rounded-md w-80 sm:w-96"
-        minlength="3"
-        required
-      />
-    </div>
-    <div class="flex flex-col md:flex-row justify-center items-center">
-      <select
-        name="dept"
-        class="p-2 m-2 border-2 border-gray-300 rounded-md w-80 sm:w-96"
-        required
-      >
-        <option classvalue="">-- select your department --</option>
-        {{ range .Depts }}
-        <option value="{{ .ID }}">{{ .Name }}</option>
-        {{ end }}
-      </select>
-      <div>
+{{ block "register" . }} {{ template "navbar" . }}
+<main
+  id="main"
+  class="w-full h-full flex flex-col justify-center items-center px-7"
+>
+  <div class="py-8">
+    <h1 class="text-center font-semibold text-4xl">Register</h1>
+    <p class="text-center text-red-500 text-lg">{{ .MailError }}</p>
+    <form
+      hx-post="/register"
+      hx-indicator="#spinner"
+      hx-target="body"
+      class="flex flex-col justify-center items-center pt-3 w-full gap-y-4"
+    >
+      <div class="flex flex-col md:flex-row justify-center items-center">
         <input
-          hx-post="/register/email"
-          hx-target="#mail_error"
-          hx-trigger="keyup changed delay:500ms"
-          type="email"
-          name="email"
-          placeholder="Email"
+          type="text"
+          name="fname"
+          placeholder="First name"
+          class="p-2 m-2 border-2 border-gray-300 rounded-md w-80 sm:w-96"
+          minlength="3"
+          required
+        />
+        <input
+          type="text"
+          name="lname"
+          placeholder="Last name"
+          class="p-2 m-2 border-2 border-gray-300 rounded-md w-80 sm:w-96"
+          minlength="3"
+          required
+        />
+      </div>
+      <div class="flex flex-col md:flex-row justify-center items-center">
+        <select
+          name="dept"
           class="p-2 m-2 border-2 border-gray-300 rounded-md w-80 sm:w-96"
           required
-        />
-        <p class="text-red-500 indent-5" id="mail_error"></p>
+        >
+          <option classvalue="">-- select your department --</option>
+          {{ range .Depts }}
+          <option value="{{ .ID }}">{{ .Name }}</option>
+          {{ end }}
+        </select>
+        <div>
+          <input
+            hx-post="/register/email"
+            hx-target="#mail_error"
+            hx-trigger="keyup changed delay:500ms"
+            type="email"
+            name="email"
+            placeholder="Email"
+            class="p-2 m-2 border-2 border-gray-300 rounded-md w-80 sm:w-96"
+            required
+          />
+          <p class="text-red-500 indent-5" id="mail_error"></p>
+        </div>
       </div>
-    </div>
-    <div class="flex flex-col">
-      <label for="type">What type of user are you?</label> <br />
-      <div class="indent-5">
+      <div class="flex flex-col">
+        <label for="type">What type of user are you?</label> <br />
+        <div class="indent-5">
+          <input
+            type="radio"
+            id="student"
+            name="type"
+            value="student"
+            required
+            hx-post="/register/student"
+            hx-target="#student-info"
+            hx-trigger="click"
+          />
+          <label for="student">Student</label>
+        </div>
+        <br />
+        <div class="indent-5">
+          <input
+            type="radio"
+            id="faculty"
+            name="type"
+            value="faculty"
+            required
+            hx-post="/register/student"
+            hx-target="#student-info"
+            hx-trigger="click"
+          />
+          <label for="faculty">Faculty</label>
+        </div>
+      </div>
+      <div
+        id="student-info"
+        class="flex flex-col md:flex-row justify-center items-center"
+      ></div>
+      <div class="flex flex-col md:flex-row justify-center items-center">
         <input
-          type="radio"
-          id="student"
-          name="type"
-          value="student"
+          type="password"
+          name="passwd1"
+          placeholder="Password"
+          class="p-2 m-2 border-2 border-gray-300 rounded-md w-80 sm:w-96"
+          minlength="8"
           required
-          hx-post="/register/student"
-          hx-target="#student-info"
-          hx-trigger="click"
         />
-        <label for="student">Student</label>
-      </div>
-      <br />
-      <div class="indent-5">
         <input
-          type="radio"
-          id="faculty"
-          name="type"
-          value="faculty"
+          type="password"
+          name="passwd2"
+          placeholder="Re-enter password"
+          class="p-2 m-2 border-2 border-gray-300 rounded-md w-80 sm:w-96"
+          hx-post="/register/passwd"
+          hx-target="#passwd-not-equal"
+          hx-trigger="keyup changed delay:500ms"
+          minlength="8"
           required
-          hx-post="/register/student"
-          hx-target="#student-info"
-          hx-trigger="click"
         />
-        <label for="faculty">Faculty</label>
+        <p class="text-center text-red-500" id="passwd-not-equal"></p>
       </div>
+      <div class="flex items-center justify-center">
+        <input
+          type="submit"
+          value="Register"
+          class="p-2 m-2 border-2 border-gray-300 rounded-md w-72 cursor-pointer bg-primary-blue transition ease-in delay-100 duration-800 hover:bg-blue-500 hover:text-white"
+        />
+        <img
+          id="spinner"
+          src="images/bars.svg"
+          alt="loading"
+          class="htmx-indicator w-4"
+        />
+      </div>
+    </form>
+    <div class="text-center">
+      Already have an account?
+      <button class="text-blue-800" hx-get="/login" hx-target="body">
+        Sign in</button
+      >.
     </div>
-    <div
-      id="student-info"
-      class="flex flex-col md:flex-row justify-center items-center"
-    ></div>
-    <div class="flex flex-col md:flex-row justify-center items-center">
-      <input
-        type="password"
-        name="passwd1"
-        placeholder="Password"
-        class="p-2 m-2 border-2 border-gray-300 rounded-md w-80 sm:w-96"
-        minlength="8"
-        required
-      />
-      <input
-        type="password"
-        name="passwd2"
-        placeholder="Re-enter password"
-        class="p-2 m-2 border-2 border-gray-300 rounded-md w-80 sm:w-96"
-        hx-post="/register/passwd"
-        hx-target="#passwd-not-equal"
-        hx-trigger="keyup changed delay:500ms"
-        minlength="8"
-        required
-      />
-      <p class="text-center text-red-500" id="passwd-not-equal"></p>
-    </div>
-    <div class="flex items-center justify-center">
-      <input
-        type="submit"
-        value="Register"
-        class="p-2 m-2 border-2 border-gray-300 rounded-md w-72 cursor-pointer bg-primary-blue transition ease-in delay-100 duration-800 hover:bg-blue-500 hover:text-white"
-      />
-      <img
-        id="spinner"
-        src="images/bars.svg"
-        alt="loading"
-        class="htmx-indicator w-4"
-      />
-    </div>
-  </form>
-  <div class="text-center">
-    Already have an account?
-    <button class="text-blue-800" hx-get="/login" hx-target="body">
-      Sign in</button
-    >.
   </div>
-</div>
+</main>
 {{ end }}
 
 <!---->
