@@ -20,14 +20,13 @@ func LoginUser(email, passwd string) (*model.User, error) {
 
 	defer conn.Close()
 
-	var id int
 	u := &model.User{}
 
 	err = conn.QueryRow(
 		`SELECT id, fname, lname, passwd, dept, user_type FROM users WHERE email=?`,
 		email,
 	).Scan(
-		&id,
+		&u.ID,
 		&u.FName,
 		&u.LName,
 		&u.Passwd,
@@ -61,7 +60,7 @@ func LoginUser(email, passwd string) (*model.User, error) {
 
 		_ = conn.QueryRow(
 			`SELECT major, year_group, student_id FROM student WHERE id = ?`,
-			id,
+			u.ID,
 		).Scan(
 			&u.StudentUser.MajorID,
 			&u.StudentUser.YearGroup,

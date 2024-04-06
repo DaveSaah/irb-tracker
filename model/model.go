@@ -25,6 +25,7 @@ type User struct {
 	Passwd      string
 	Type        string
 	DeptID      int
+	ID          int
 }
 
 // AddStudent adds a student to the user
