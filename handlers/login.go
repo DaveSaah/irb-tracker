@@ -39,7 +39,7 @@ func LoginUser(c echo.Context) error {
 		}
 	}
 
-	return c.Render(http.StatusOK, "index", nil)
+	return c.Render(http.StatusOK, "dashboard", nil)
 
 	// TODO: if email and passwd is correct
 	// 1. create a session

@@ -26,6 +26,11 @@ func main() {
 	e.GET("/login", handlers.LoginView)
 	e.POST("/login", handlers.LoginUser)
 
+	e.GET("/dashboard", handlers.DashboardView)
+	e.GET("/projects", handlers.ProjectsView)
+	e.GET("/activity", handlers.ActivityView)
+	e.GET("/review", handlers.ReviewView)
+
 	// start server with logger
 	e.Logger.Fatal(e.Start(":42069"))
 }
