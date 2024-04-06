@@ -57,6 +57,7 @@
         </svg>
         <p>Projects</p>
       </div>
+      {{ if eq (index .Values "type") "faculty" }}
       <div
         class="flex pl-5 justify-start items-center gap-x-2 py-2 cursor-pointer hover:bg-blue-600 hover:text-white hover:fill-white"
         hx-get="/review"
@@ -76,6 +77,7 @@
         </svg>
         <p>Review</p>
       </div>
+      {{ end }}
       <div
         class="flex pl-5 justify-start items-center gap-x-2 py-2 cursor-pointer hover:bg-blue-600 hover:text-white hover:fill-white"
         hx-get="/activity"
@@ -95,8 +97,8 @@
     </div>
     <div
       class="flex justify-center items-center gap-x-2 py-2 cursor-pointer hover:bg-blue-600 hover:text-white hover:fill-white"
-      hx-get="/activity"
-      hx-target="#dashboard-content"
+      hx-post="/logout"
+      hx-target="body"
     >
       <svg
         class="h-8 w-8"
@@ -119,7 +121,9 @@
   </nav>
 
   <div id="dashboard-content" class="grow p-4 justify-start">
-    <div class="flex justify-end pb-3 text-lg">Welcome, David Saah</div>
+    <div class="flex justify-end pb-3 text-lg">
+      Welcome, {{ index .Values "username" }}
+    </div>
     <div
       class="flex justify-between items-center border-2 rounded-3xl border-primary-blue h-36 px-4"
     >
