@@ -42,3 +42,12 @@ func (u *User) AddPasswdHash(hash string) {
 func (u *User) ClearPasswd() {
 	u.Passwd = ""
 }
+
+type Project struct {
+	Title         string
+	Status        string
+	Department    string
+	DateSubmitted string
+	Supervisor    string
+	ID            int
+}

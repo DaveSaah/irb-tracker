@@ -40,6 +40,9 @@ func main() {
 
 	e.POST("/logout", handlers.LogoutUser)
 
+	search := e.Group("/search")
+	search.POST("/projects", handlers.ProjectSearch)
+
 	// start server with logger
 	e.Logger.Fatal(e.Start(":42069"))
 }
