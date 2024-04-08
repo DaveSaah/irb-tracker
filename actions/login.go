@@ -11,16 +11,16 @@ import (
 )
 
 // LoginUser logs in a user
-func LoginUser(email, passwd string) (*model.User, error) {
+func LoginUser(email, passwd string) (model.User, error) {
 	conn, err := db.Init()
 	if err != nil {
 		log.Printf("Cannot create the db connection: %s\n", err)
-		return &model.User{}, err
+		return model.User{}, err
 	}
 
 	defer conn.Close()
 
-	u := &model.User{}
+	u := model.User{}
 
 	err = conn.QueryRow(
 		`SELECT id, fname, lname, passwd, dept, user_type FROM users WHERE email=?`,
@@ -38,24 +38,24 @@ func LoginUser(email, passwd string) (*model.User, error) {
 	switch {
 	case err == sql.ErrNoRows:
 		log.Printf("No user with email: %s", email)
-		return &model.User{}, errors.New("no email found")
+		return model.User{}, errors.New("no email found")
 	case err != nil:
 		log.Printf("Error querying the database: %s", err)
-		return &model.User{}, err
+		return model.User{}, err
 	}
 
 	// check if the password matches
 	err = bcrypt.CompareHashAndPassword([]byte(u.Passwd), []byte(passwd))
 	if err != nil {
 		log.Printf("Password does not match: %s", err)
-		return &model.User{}, errors.New("wrong password")
+		return model.User{}, errors.New("wrong password")
 	}
 
 	u.ClearPasswd() // remove the password from the user struct
 
 	if u.Type == "student" {
 		// create a memory location to store the student data
-		s := &model.Student{}
+		s := model.Student{}
 		u.AddStudent(s)
 
 		_ = conn.QueryRow(

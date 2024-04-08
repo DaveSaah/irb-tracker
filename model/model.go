@@ -18,18 +18,18 @@ type Student struct {
 }
 
 type User struct {
-	StudentUser *Student
 	FName       string
 	LName       string
 	Email       string
 	Passwd      string
 	Type        string
+	StudentUser Student
 	DeptID      int
 	ID          int
 }
 
 // AddStudent adds a student to the user
-func (u *User) AddStudent(s *Student) {
+func (u *User) AddStudent(s Student) {
 	u.StudentUser = s
 }
 

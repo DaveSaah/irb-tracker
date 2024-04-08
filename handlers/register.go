@@ -33,14 +33,14 @@ func RegisterView(c echo.Context) error {
 		return c.Render(http.StatusOK, "dashboard", sess)
 	}
 
-	return c.Render(http.StatusOK, "register", &registerData{Depts: depts})
+	return c.Render(http.StatusOK, "register", registerData{Depts: depts})
 }
 
 // RegisterEmailValidate validates the email used to register
 func RegisterEmailValidate(c echo.Context) error {
 	email := c.FormValue("email")
 	if ok := helpers.IsMailValid(email); !ok {
-		return c.Render(http.StatusBadRequest, "mail_error", &registerData{MailError: "Invalid email"})
+		return c.Render(http.StatusBadRequest, "mail_error", registerData{MailError: "Invalid email"})
 	}
 
 	exists, err := functions.DoesMailExist(email)
@@ -49,7 +49,7 @@ func RegisterEmailValidate(c echo.Context) error {
 	}
 	if exists {
 		return c.Render(http.StatusBadRequest, "mail_error",
-			&registerData{MailError: "Email already exists"},
+			registerData{MailError: "Email already exists"},
 		)
 	}
 
@@ -66,7 +66,7 @@ func RegisterStudentView(c echo.Context) error {
 		}
 
 		return c.Render(http.StatusOK, "student_info",
-			&studentData{
+			studentData{
 				Majors:       majors,
 				YearGroupMin: time.Now().Year(),
 				YearGroupMax: time.Now().Year() + 4,
@@ -83,7 +83,7 @@ func RegisterPasswdValidate(c echo.Context) error {
 
 	if passwd2 != "" && passwd1 != passwd2 {
 		return c.Render(http.StatusBadRequest, "passwd_error",
-			&registerData{PasswdError: "Passwords do not match"},
+			registerData{PasswdError: "Passwords do not match"},
 		)
 	}
 
@@ -101,7 +101,7 @@ func RegisterUser(c echo.Context) error {
 	}
 	if exists {
 		return c.Render(http.StatusBadRequest, "register",
-			&registerData{
+			registerData{
 				MailError: "Email already exists, try again",
 				Depts:     depts,
 			},
@@ -114,7 +114,7 @@ func RegisterUser(c echo.Context) error {
 	user_type := c.FormValue("type")
 	dept_id, _ := strconv.Atoi(c.FormValue("dept"))
 
-	user := &model.User{
+	user := model.User{
 		FName:  fname,
 		LName:  lname,
 		Email:  email,
@@ -128,7 +128,7 @@ func RegisterUser(c echo.Context) error {
 		year, _ := strconv.Atoi(c.FormValue("year_group"))
 		student_id := c.FormValue("student_id")
 
-		student := &model.Student{
+		student := model.Student{
 			StudentID: student_id,
 			MajorID:   major,
 			YearGroup: year,
@@ -136,7 +136,7 @@ func RegisterUser(c echo.Context) error {
 		user.AddStudent(student)
 	}
 
-	err = actions.RegisterUser(user)
+	err = actions.RegisterUser(&user)
 	if err != nil {
 		return err
 	}
