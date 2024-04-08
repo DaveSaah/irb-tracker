@@ -9,7 +9,6 @@
   "author": "DaveSaah",
   "license": "MIT",
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.12",
     "tailwindcss": "^3.4.1"
   }
 }
