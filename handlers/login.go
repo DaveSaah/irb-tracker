@@ -45,6 +45,6 @@ func LoginUser(c echo.Context) error {
 		}
 	}
 
-	sess := helpers.CreateSession(user, c)
+	sess := helpers.CreateSession(&user, c)
 	return c.Render(http.StatusOK, "dashboard", sess)
 }
