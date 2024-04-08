@@ -37,16 +37,6 @@ func DashboardView(c echo.Context) error {
 	return c.Render(http.StatusOK, "dashboard", sess)
 }
 
-// ProjectsView renders the projects page.
-func ProjectsView(c echo.Context) error {
-	_, isLoggedIn := helpers.CheckSession(c)
-	if !isLoggedIn {
-		return c.Render(http.StatusBadRequest, "index", nil)
-	}
-
-	return c.Render(http.StatusOK, "projects", nil)
-}
-
 // ActivityView renders the activity page.
 func ActivityView(c echo.Context) error {
 	_, isLoggedIn := helpers.CheckSession(c)
