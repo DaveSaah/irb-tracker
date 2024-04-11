@@ -35,7 +35,6 @@ func main() {
 
 	e.GET("/dashboard", handlers.DashboardView)
 	e.GET("/projects", handlers.ProjectsView)
-	e.GET("/activity", handlers.ActivityView)
 	e.GET("/review", handlers.ReviewView)
 
 	e.POST("/logout", handlers.LogoutUser)

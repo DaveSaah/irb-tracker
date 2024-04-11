@@ -27,16 +27,6 @@ func HomeView(c echo.Context) error {
 	return c.Render(http.StatusOK, "home", nil)
 }
 
-// ActivityView renders the activity page.
-func ActivityView(c echo.Context) error {
-	_, isLoggedIn := helpers.CheckSession(c)
-	if !isLoggedIn {
-		return c.Render(http.StatusBadRequest, "index", nil)
-	}
-
-	return c.Render(http.StatusOK, "activity", nil)
-}
-
 // ReviewView renders the review page.
 func ReviewView(c echo.Context) error {
 	sess, isLoggedIn := helpers.CheckSession(c)
