@@ -65,9 +65,9 @@ func LoginUser(email, passwd string) (model.User, error) {
 			`SELECT major, year_group, student_id FROM student WHERE id = ?`,
 			u.ID,
 		).Scan(
-			&u.StudentUser.MajorID,
-			&u.StudentUser.YearGroup,
-			&u.StudentUser.StudentID,
+			&u.Student.MajorID,
+			&u.Student.YearGroup,
+			&u.Student.StudentID,
 		)
 
 	}
