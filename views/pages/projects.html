@@ -1,17 +1,36 @@
 {{ block "projects" . }}
-<div
-  class="border-2 rounded-3xl border-primary-blue h-56 px-6 py-3 flex gap-x-10"
->
+<div class="px-6 py-3 flex justify-around">
   <div class="flex flex-col">
-    <h1 class="text-4xl font-semibold pb-3">David Saah</h1>
-    <address class="py-2">
-      <p>Email: david.saah@ashesi.edu.gh</p>
-      <p>ID: 72522025</p>
-      <p>Dept: Computer Science</p>
-    </address>
+    <h1 class="text-4xl font-semibold pb-3">
+      {{ index .Session.Values "username" }}
+    </h1>
+    <div class="py-2 leading-8" id="userinfo">
+      <p>
+        <span class="font-semibold underline">Email:</span> {{ .UserInfo.Email
+        }}
+      </p>
+      {{ if eq (index .Session.Values "type") "student" }}
+      <p>
+        <span class="font-semibold underline">ID:</span> {{
+        .UserInfo.Student.StudentID }}
+      </p>
+      <p>
+        <span class="font-semibold underline">Major:</span> {{
+        .UserInfo.Student.Major }}
+      </p>
+      <p>
+        <span class="font-semibold underline">Year Group:</span> {{
+        .UserInfo.Student.Major }}
+      </p>
+      {{ end }}
+      <p>
+        <span class="font-semibold underline">Dept:</span> {{
+        .UserInfo.Department }}
+      </p>
+    </div>
     <button
       type="button"
-      class="flex items-center gap-x-2 rounded-xl p-3 bg-slate-200 w-4/5"
+      class="flex items-center gap-x-2 rounded-xl p-3 bg-slate-200 w-4/5 mt-5"
     >
       <svg
         class="h-5 w-5"
@@ -40,14 +59,14 @@
 
   <div class="flex flex-col">
     <h1 class="text-4xl font-semibold pb-3">Project Statistics</h1>
-    <div class="italic flex gap-x-10">
+    <div class="flex gap-x-10 text-lg">
       <div>
-        <p>Submitted: 0</p>
-        <p>Accepted: 0</p>
+        <p>Submitted: {{ .SubmittedCount }}</p>
+        <p>Approved: {{ .ApprovedCount }}</p>
       </div>
       <div>
-        <p>Rejected: 0</p>
-        <p>Pending: 0</p>
+        <p>Rejected: {{ .RejectedCount }}</p>
+        <p>Pending: {{ .PendingCount }}</p>
       </div>
     </div>
   </div>
