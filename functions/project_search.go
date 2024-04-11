@@ -18,8 +18,10 @@ func FindProjects(pattern string) ([]model.Project, error) {
 
 	defer conn.Close()
 
+	pattern = "%" + pattern + "%"
+
 	rows, err := conn.Query(
-		`SELECT projects.id, sname, department.name AS dept_name, date_submitted, 
+		`SELECT projects.id, title, sname, department.name, date_submitted, 
     CONCAT(fname, " ", lname) as supervisor_name
     FROM projects
     INNER JOIN status
@@ -28,9 +30,9 @@ func FindProjects(pattern string) ([]model.Project, error) {
     ON department.id = projects.dept
     INNER JOIN users
     ON users.id = projects.supervisor
-    WHERE projects.title LIKE '%?%'
-    OR department.name LIKE '%?%'
-    OR projects.brief LIKE '%?%'
+    WHERE projects.title LIKE ?
+    OR department.name LIKE ?
+    OR projects.brief LIKE ?
     `,
 		pattern, pattern, pattern,
 	)
@@ -46,6 +48,7 @@ func FindProjects(pattern string) ([]model.Project, error) {
 
 		err = rows.Scan(
 			&project.ID,
+			&project.Title,
 			&project.Status,
 			&project.Department,
 			&project.DateSubmitted,
