@@ -1,6 +1,8 @@
 package helpers
 
 import (
+	"net/http"
+
 	"github.com/boring-school-work/irb-tracker/model"
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo-contrib/session"
@@ -8,11 +10,12 @@ import (
 )
 
 // CreateSession creates a new session for the user
-func CreateSession(u *model.User, c echo.Context) *sessions.Session {
+func CreateSession(u *model.User, c echo.Context) {
 	sess, _ := session.Get("session", c)
 	sess.Options = &sessions.Options{
 		MaxAge:   86400, // 24 hours
 		HttpOnly: true,
+		SameSite: http.SameSiteStrictMode,
 	}
 
 	sess.Values["id"] = u.ID
@@ -20,7 +23,6 @@ func CreateSession(u *model.User, c echo.Context) *sessions.Session {
 	sess.Values["type"] = u.Type
 
 	sess.Save(c.Request(), c.Response())
-	return sess
 }
 
 // DestroySession destroys the session for the user
