@@ -13,6 +13,7 @@ type Major struct {
 
 type Student struct {
 	StudentID string
+	Major     string
 	MajorID   int
 	YearGroup int
 }
@@ -23,19 +24,20 @@ type Supervisor struct {
 }
 
 type User struct {
-	FName       string
-	LName       string
-	Email       string
-	Passwd      string
-	Type        string
-	StudentUser Student
-	DeptID      int
-	ID          int
+	FName      string
+	LName      string
+	Email      string
+	Passwd     string
+	Type       string
+	Department string
+	Student    Student
+	DeptID     int
+	ID         int
 }
 
 // AddStudent adds a student to the user
 func (u *User) AddStudent(s Student) {
-	u.StudentUser = s
+	u.Student = s
 }
 
 // AddPasswdHash replaces the user's password with the provided hash

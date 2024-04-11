@@ -58,9 +58,9 @@ func RegisterUser(u *model.User) error {
 			`INSERT INTO student(id, student_id, major, year_group)
       VALUES(?, ?, ?, ?)`,
 			user_id,
-			u.StudentUser.StudentID,
-			u.StudentUser.MajorID,
-			u.StudentUser.YearGroup,
+			u.Student.StudentID,
+			u.Student.MajorID,
+			u.Student.YearGroup,
 		)
 		if err != nil {
 			log.Printf("Cannot insert student information: %s\n", err)
