@@ -28,9 +28,9 @@ var depts, _ = functions.FetchDepts()
 
 // RegisterView renders the registration page
 func RegisterView(c echo.Context) error {
-	sess, isLoggedIn := helpers.CheckSession(c)
+	_, isLoggedIn := helpers.CheckSession(c)
 	if isLoggedIn {
-		return c.Render(http.StatusOK, "dashboard", sess)
+		return DashboardView(c)
 	}
 
 	return c.Render(http.StatusOK, "register", registerData{Depts: depts})

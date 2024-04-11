@@ -9,9 +9,9 @@ import (
 
 // IndexView renders the index page.
 func IndexView(c echo.Context) error {
-	sess, isLoggedIn := helpers.CheckSession(c)
+	_, isLoggedIn := helpers.CheckSession(c)
 	if isLoggedIn {
-		return c.Render(http.StatusOK, "dashboard", sess)
+		return DashboardView(c)
 	}
 
 	return c.Render(http.StatusOK, "index", nil)
@@ -19,22 +19,12 @@ func IndexView(c echo.Context) error {
 
 // HomeView renders the home page.
 func HomeView(c echo.Context) error {
-	sess, isLoggedIn := helpers.CheckSession(c)
+	_, isLoggedIn := helpers.CheckSession(c)
 	if isLoggedIn {
-		return c.Render(http.StatusOK, "dashboard", sess)
+		return DashboardView(c)
 	}
 
 	return c.Render(http.StatusOK, "home", nil)
-}
-
-// DashboardView renders the dashboard page.
-func DashboardView(c echo.Context) error {
-	sess, isLoggedIn := helpers.CheckSession(c)
-	if !isLoggedIn {
-		return c.Render(http.StatusBadRequest, "index", nil)
-	}
-
-	return c.Render(http.StatusOK, "dashboard", sess)
 }
 
 // ActivityView renders the activity page.
@@ -55,7 +45,7 @@ func ReviewView(c echo.Context) error {
 	}
 
 	if sess.Values["type"] != "faculty" {
-		return c.Render(http.StatusBadRequest, "dashboard", sess)
+		return DashboardView(c)
 	}
 
 	return c.Render(http.StatusOK, "review", nil)

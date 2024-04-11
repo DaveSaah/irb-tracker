@@ -23,7 +23,10 @@ func LoginUser(email, passwd string) (model.User, error) {
 	u := model.User{}
 
 	err = conn.QueryRow(
-		`SELECT id, fname, lname, passwd, dept, user_type FROM users WHERE email=?`,
+		`SELECT 
+    id, fname, lname, passwd, dept, user_type 
+    FROM users 
+    WHERE email=?`,
 		email,
 	).Scan(
 		&u.ID,
