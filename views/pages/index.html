@@ -8,7 +8,21 @@
     <script src="js/htmx.min.js"></script>
     <script src="js/custom.js"></script>
     <link rel="stylesheet" href="css/index.css" />
-    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "primary-red": "#FF0307",
+              "primary-text": "#000908",
+              "primary-bg": "#FBFFFE",
+              "primary-blue": "#91A6FF",
+            },
+          },
+        },
+      };
+    </script>
   </head>
   <body class="bg-primary-bg text-primary-text">
     {{ template "home" . }}
@@ -18,7 +32,9 @@
 
 <!---->
 
-{{ block "home" . }} {{ template "navbar" . }}
+{{ block "home" . }}
+<!-- -->
+{{ template "navbar" . }}
 <main
   id="main"
   class="w-full h-full flex flex-col justify-center items-center px-7"

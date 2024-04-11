@@ -1,0 +1,289 @@
+{{ block "proposal" . }}
+<div class="flex flex-col justify-center items-center pb-8 bg-slate-200">
+  <button
+    class="flex self-start items-center p-3 gap-x-3 hover:text-blue-700"
+    hx-get="/"
+    hx-target="body"
+  >
+    <img
+      src="images/left-arrow.svg"
+      class="object-contain w-6 h-6"
+      alt="left arrow"
+    />
+    Go back to dashboard
+  </button>
+  <h1 class="text-center font-bold text-3xl py-6">
+    Submit a Proposal For Review
+  </h1>
+  <p class="w-1/2">
+    In this form, you will prompted to give basic information about yourself as
+    the principal investigator of your proposed research study, your faculty
+    supervisor if applicable, along with the methods of recruitment and data
+    collection you will use and the benefits and risks you anticipate.
+  </p>
+  <p class="font-semibold pt-3 pb-6 w-1/2">
+    Failure to provide the essential, requested information about your proposed
+    research study may result in additional requests for information and/or
+    documents, and may delay the start of your research.
+  </p>
+  <form
+    class="flex flex-col justify-center items-center gap-y-4 w-full"
+    hx-post="/proposal"
+    hx-target="body"
+    hx-encoding="multipart/form-data"
+  >
+    <h1 class="text-2xl py-3 font-semibold">Section 1: Basic Information</h1>
+    <div class="flex justify-center items-center w-1/2 gap-x-3">
+      <label for="title">Title:</label>
+      <input
+        type="text"
+        class="p-2 w-full rounded"
+        name="title"
+        placeholder="Title of the project"
+        required
+      />
+    </div>
+    <div class="flex justify-center items-center w-1/2 gap-x-3">
+      <label for="brief">Brief:</label>
+      <textarea
+        class="p-2 w-full rounded"
+        name="brief"
+        placeholder="Provide a brief description of the project"
+        rows="3"
+        cols=""
+        required
+      ></textarea>
+    </div>
+    <div class="flex justify-center items-center w-1/2 gap-x-3">
+      <label for="dept">Department:</label>
+      <select name="dept" class="p-2 w-full bg-white rounded" required>
+        <option value="">-- select a department --</option>
+        {{ range .Departments }}
+        <option value="{{ .ID }}">{{ .Name }}</option>
+        {{ end }}
+      </select>
+    </div>
+    {{ if eq (index .Session.Values "type") "student" }}
+    <div class="flex justify-center items-center w-1/2 gap-x-3">
+      <label for="supervisor">Supervisor:</label>
+      <select name="supervisor" class="p-2 w-full bg-white rounded" required>
+        <option value="">-- select a supervisor --</option>
+        {{ range .Supervisors }}
+        <option value="{{ .ID }}">{{ .Name }}</option>
+        {{ end }}
+      </select>
+    </div>
+    {{ end }}
+    <div class="flex justify-center items-center w-1/2 gap-x-3">
+      <label for="investigators">Other investigators:</label>
+      <textarea
+        class="p-2 w-full rounded"
+        name="investigators"
+        placeholder="Provide a list of other investigators involved in the project separated by comma"
+        rows=""
+        cols=""
+      ></textarea>
+    </div>
+    <h1 class="text-2xl py-3 font-semibold">Section 2: Start and End Dates</h1>
+    <div class="flex justify-center items-center w-full gap-x-8">
+      <div class="flex flex-col gap-y-2 w-1/6">
+        <label for="start_date">Project start date</label>
+        <input
+          type="date"
+          name="start_date"
+          class="px-2 py-1 w-full rounded"
+          min="{{ .Today }}"
+          required
+        />
+      </div>
+      <div class="flex flex-col gap-y-2 w-1/6">
+        <label for="end_date">Project end date</label>
+        <input
+          type="date"
+          name="end_date"
+          class="px-2 py-1 w-full rounded"
+          min="{{ .Today }}"
+          required
+        />
+      </div>
+    </div>
+    <h1 class="text-2xl py-3 font-semibold">
+      Section 3: Purpose and Dissemination
+    </h1>
+    <div class="flex flex-col justify-center items-center w-full gap-y-3">
+      <label class="w-1/2" for="purpose"
+        >Why is this research being conducted? (CHECK ALL THAT APPLY):</label
+      >
+      <div class="flex flex-col items-start w-1/2 gap-y-3">
+        <span class="ml-8">
+          <input type="checkbox" name="purpose" value="Faculty Research" />
+          Faculty Research <br />
+        </span>
+        <span class="ml-8">
+          <input type="checkbox" name="purpose" value="Class Project" />
+          Class Project<br />
+        </span>
+        <span class="ml-8">
+          <input
+            type="checkbox"
+            name="purpose"
+            value="Student Research Project"
+          />
+          Student Research Project<br />
+        </span>
+        <span class="ml-8">
+          <input type="checkbox" name="purpose" value="Grant Proposal" />
+          Grant Proposal<br />
+        </span>
+        <span class="ml-8">
+          <input type="checkbox" name="purpose" value="Thesis Project" />
+          Thesis Project<br />
+        </span>
+        <span class="flex ml-8 gap-x-3 justify-center items-center">
+          <input type="checkbox" name="p_has_other" value="true" />
+          Other<br />
+          <input type="text" name="other_purpose" class="p-1 w-96 rounded" />
+        </span>
+      </div>
+    </div>
+    <div class="flex flex-col justify-center items-center w-full gap-y-3">
+      <label class="w-1/2" for="results_dissemination"
+        >Where will the results be disseminated?:</label
+      >
+      <div class="flex flex-col items-start w-1/2 gap-y-3">
+        <span class="ml-8">
+          <input
+            type="checkbox"
+            name="results_dissemination"
+            value="Off Campus Presentation"
+          />
+          Off Campus Presentation<br />
+        </span>
+        <span class="ml-8">
+          <input
+            type="checkbox"
+            name="results_dissemination"
+            value="Class Presentation"
+          />
+          Class Presentation<br />
+        </span>
+        <span class="ml-8">
+          <input
+            type="checkbox"
+            name="results_dissemination"
+            value="Ashesi Community"
+          />
+          Ashesi Community<br />
+        </span>
+        <span class="flex ml-8 gap-x-3 justify-center items-center">
+          <input type="checkbox" name="d_has_other" value="true" />
+          Other<br />
+          <input
+            type="text"
+            name="other_dissemination"
+            class="w-96 p-1 rounded"
+          />
+        </span>
+      </div>
+    </div>
+    <h1 class="text-2xl py-3 font-semibold">
+      Section 4: Participant Recruitment
+    </h1>
+    <div class="flex justify-center items-center w-1/2 gap-x-3">
+      <label for="participant_count" class="w-96"
+        >Estimated number of participants:</label
+      >
+      <input
+        type="number"
+        min="0"
+        class="p-2 w-full rounded"
+        name="participant_count"
+        required
+      />
+    </div>
+    <div class="flex flex-col justify-center items-center w-full gap-y-3">
+      <label class="w-1/2" for="participant_type"
+        >Indicate which of the following best describes the research
+        participants <br />(i.e. the individuals from or about whom you will be
+        obtaining information):</label
+      >
+      <div class="flex flex-col items-start w-1/2 gap-y-3">
+        <span class="ml-8">
+          <input
+            type="checkbox"
+            name="participant_type"
+            value="Active Independent Adults"
+          />
+          Active Independent Adults (not part of the school)<br />
+        </span>
+        <span class="ml-8">
+          <input type="checkbox" name="participant_type" value="Minors" />
+          Minors<br />
+        </span>
+        <span class="ml-8">
+          <input
+            type="checkbox"
+            name="participant_type"
+            value="Ashesi Community"
+          />
+          Ashesi Community (i.e. students, staff, faculty)<br />
+        </span>
+      </div>
+    </div>
+    <div class="flex flex-col justify-center items-center w-full gap-y-3">
+      <label class="w-1/2" for="recruitment_method"
+        >Which method(s) of recruitment will be used?:</label
+      >
+      <div class="flex flex-col items-start w-1/2 gap-y-3">
+        <span class="ml-8">
+          <input type="checkbox" name="recruitment_method" value="Flyer" />
+          Flyer<br />
+        </span>
+        <span class="ml-8">
+          <input
+            type="checkbox"
+            name="recruitment_method"
+            value="Online Recruitment"
+          />
+          Online Recruitment<br />
+        </span>
+        <span class="flex ml-8 gap-x-3 justify-center items-center">
+          <input type="checkbox" name="r_has_other" value="true" />
+          Other<br />
+          <input
+            type="text"
+            name="other_recruitment"
+            class="w-96 p-1 rounded"
+          />
+        </span>
+      </div>
+    </div>
+    <h1 class="text-2xl py-3 font-semibold">Section 5: Supported Documents</h1>
+    <div class="flex flex-col justify-center items-center w-full gap-y-3">
+      <ul class="list-decimal w-1/2">
+        <li>Detailed proposal document.</li>
+        <li>Proposed participant compensation.</li>
+        <li>Recruitment flyer or poster if applicable.</li>
+        <li>
+          A copy of the materials the participants will be exposed to, for
+          example, questionnaires and consent form)
+        </li>
+        <li>
+          Research Design & Method. (Describe exact procedures and what will be
+          done to your research participants)
+        </li>
+        <li>Attach a funding application if your research requires it.</li>
+      </ul>
+      <div class="flex flex-col items-start w-1/2 gap-y-3">
+        Upload a zip file
+        <input type="file" accept=".zip" name="associated_documents" />
+      </div>
+    </div>
+    <input
+      class="bg-blue-600 text-white p-2 rounded w-52 cursor-pointer"
+      type="submit"
+      value="Submit"
+    />
+  </form>
+</div>
+{{ end }}

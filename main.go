@@ -43,6 +43,9 @@ func main() {
 	search := e.Group("/search")
 	search.POST("/projects", handlers.ProjectSearch)
 
+	e.GET("/proposal", handlers.ProposalView)
+	e.POST("/proposal", handlers.SubmitProposal)
+
 	// start server with logger
 	e.Logger.Fatal(e.Start(":42069"))
 }

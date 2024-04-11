@@ -1,0 +1,100 @@
+{{ block "dashboard_content" . }}
+<main class="flex">
+  {{ template "dashboard_nav" . }}
+  <div id="dashboard-content" class="grow p-4 justify-start">
+    <div class="flex justify-end pb-3 text-lg">
+      Welcome, {{ index .Session.Values "username" }}
+    </div>
+    <div
+      class="flex justify-between items-center border-2 rounded-3xl border-primary-blue h-36 px-4"
+    >
+      <div class="flex gap-x-3">
+        <img
+          src="images/calendar-icon.svg"
+          alt="calender icon"
+          class="object-contain w-16 h-16"
+        />
+        <div>
+          <p class="text-lg">SATURDAY</p>
+          <p class="text-xl">APRIL 6</p>
+        </div>
+      </div>
+      <div class="flex flex-col">
+        <div class="mb-6 h-5 w-96 rounded-lg flex">
+          <div
+            class="h-5 bg-gray-500 rounded-l-lg w-[{{ .PendingPercent }}%]"
+          ></div>
+          <div class="h-5 bg-green-500 w-[{{ .ApprovedPercent }}%]"></div>
+          <div
+            class="h-5 bg-red-500 rounded-r-lg w-[{{ .RejectedPercent }}%]"
+          ></div>
+        </div>
+        <div class="flex justify-between">
+          <div class="flex gap-x-2 items-center">
+            <svg class="h-5 w-5 rounded-md">
+              <rect class="h-5 w-5 fill-gray-500" />
+            </svg>
+            Pending
+          </div>
+          <div class="flex gap-x-2 items-center">
+            <svg class="h-5 w-5 rounded-md">
+              <rect class="h-5 w-5 fill-green-500" />
+            </svg>
+            Approved
+          </div>
+          <div class="flex gap-x-2 items-center">
+            <svg class="h-5 w-5 rounded-md">
+              <rect class="h-5 w-5 fill-red-500" />
+            </svg>
+            Rejected
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-around pt-16 pb-8">
+      <div
+        class="px-5 gap-y-8 pt-5 pb-3 rounded-lg drop-shadow-lg bg-white w-1/5 flex flex-col justify-between"
+      >
+        <div class="flex items-center">Submitted Projects</div>
+        <div class="font-bold text-2xl">{{ .SubmittedCount }}</div>
+      </div>
+      <div
+        class="px-5 gap-y-8 pt-5 pb-3 rounded-lg drop-shadow-lg bg-white w-1/5 flex flex-col justify-between"
+      >
+        <div class="flex items-center">Approved Projects</div>
+        <div class="font-bold text-2xl">{{ .ApprovedCount }}</div>
+      </div>
+      <div
+        class="px-5 gap-y-8 pt-5 pb-3 rounded-lg drop-shadow-lg bg-white w-1/5 flex flex-col justify-between"
+      >
+        <div class="flex items-center">Rejected Projects</div>
+        <div class="font-bold text-2xl">{{ .RejectedCount }}</div>
+      </div>
+    </div>
+    <div class="py-8">
+      <h1 class="font-semibold text-2xl pb-4">Recent Proposals</h1>
+      <div class="table w-full">
+        <div class="table-header-group">
+          <div class="table-row">
+            <div class="table-cell bg-gray-300 py-2 pl-3">Title</div>
+            <div class="table-cell bg-gray-300 py-2 pl-3">Brief</div>
+            <div class="table-cell bg-gray-300 py-2 pl-3">Status</div>
+            <div class="table-cell bg-gray-300 py-2 pl-3">Supervisor</div>
+          </div>
+        </div>
+        <div class="table-row-group">
+          <div class="table-row">
+            <div class="table-cell border-b py-2 px-3">something</div>
+            <div class="table-cell border-b py-2 px-3">something</div>
+            <div class="table-cell border-b py-2 px-3">something</div>
+            <div class="table-cell border-b py-2 px-3">something</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!---->
+</main>
+{{ end }}
+<!---->

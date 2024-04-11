@@ -17,6 +17,11 @@ type Student struct {
 	YearGroup int
 }
 
+type Supervisor struct {
+	Name string
+	ID   int
+}
+
 type User struct {
 	FName       string
 	LName       string
@@ -44,10 +49,24 @@ func (u *User) ClearPasswd() {
 }
 
 type Project struct {
-	Title         string
-	Status        string
-	Department    string
-	DateSubmitted string
-	Supervisor    string
-	ID            int
+	EndDate               string
+	Department            string
+	DateSubmitted         string
+	Supervisor            string
+	Brief                 string
+	Status                string
+	Title                 string
+	StartDate             string
+	DocumentPath          string
+	PrincipalInvestigator string
+	Investigators         []string
+	ResultsDissemination  []string
+	ParticipantType       []string
+	RecruitmentMethod     []string
+	Purpose               []string
+	PrincipalID           int
+	ParticipantCount      int
+	DeptID                int
+	SupID                 int
+	ID                    int
 }
