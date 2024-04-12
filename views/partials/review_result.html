@@ -1,0 +1,38 @@
+{{ block "review_result" . }}
+<!---->
+{{ if .Error }}
+<div class="text-center py-3 text-red-500">{{ .Error }}</div>
+{{ else }}
+
+<div class="table w-full pt-3">
+  <div class="table-header-group">
+    <div class="table-row">
+      <div class="table-cell bg-gray-300 py-2 pl-3">Title</div>
+      <div class="table-cell bg-gray-300 py-2 pl-3">Brief</div>
+      <div class="table-cell bg-gray-300 py-2 pl-3">Status</div>
+      <div class="table-cell bg-gray-300 py-2 pl-3">Date submitted</div>
+      <div class="table-cell bg-gray-300 py-2 pl-3">Action</div>
+    </div>
+  </div>
+  {{ range .Projects }}
+  <div class="table-row-group">
+    <div class="table-row">
+      <div class="table-cell border-b py-2 px-3 w-1/4">{{ .Title }}</div>
+      <div class="table-cell border-b py-2 px-3 w-1/2">{{ .Brief }}</div>
+      <div class="table-cell border-b py-2 px-3">{{ .Status }}</div>
+      <div class="table-cell border-b py-2 px-3">{{ .DateSubmitted }}</div>
+      <div class="table-cell border-b py-2 px-3">
+        <button
+          type="button"
+          class="py-1 px-3 bg-primary-blue rounded-md"
+          hx-get="/project/review?id={{ .ID }}"
+          hx-target="#dashboard-content"
+        >
+          view
+        </button>
+      </div>
+    </div>
+  </div>
+  {{ end }}
+</div>
+{{ end }} {{ end }}
