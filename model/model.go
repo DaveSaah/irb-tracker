@@ -58,6 +58,7 @@ type Project struct {
 	Brief                 string
 	Status                string
 	Title                 string
+	Proposal              string
 	StartDate             string
 	DocumentPath          string
 	PrincipalInvestigator string

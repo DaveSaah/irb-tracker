@@ -48,9 +48,11 @@
       <textarea
         class="p-2 w-full rounded"
         name="brief"
-        placeholder="Provide a brief description of the project"
+        placeholder="Provide a brief description of the project (250 - 300 characters)"
         rows="3"
         cols=""
+        minlength="250"
+        maxlength="300"
         required
       ></textarea>
     </div>
@@ -84,6 +86,23 @@
         cols=""
       ></textarea>
     </div>
+
+    <h1 class="text-2xl py-3 font-semibold">
+      Section 1.1: Research Proposal Summary
+    </h1>
+    <p class="w-1/2 text-lg">
+      Provide a summary proposal of your research (min 600 characters). Be
+      concise in providing context and relevant information. You will submit a
+      PDF with the details of your research proposal at the end of the form.
+    </p>
+    <textarea
+      class="p-2 w-1/2 rounded"
+      name="proposal"
+      rows="8"
+      cols=""
+      minlength="600"
+    ></textarea>
+
     <h1 class="text-2xl py-3 font-semibold">Section 2: Start and End Dates</h1>
     <div class="flex justify-center items-center w-full gap-x-8">
       <div class="flex flex-col gap-y-2 w-1/6">
