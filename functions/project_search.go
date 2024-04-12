@@ -9,7 +9,7 @@ import (
 
 // ProjectSearch returns a slice of projects that match
 // a specific pattern
-func FindProjects(pattern string) ([]model.Project, error) {
+func FindProjects(userID int, pattern string) ([]model.Project, error) {
 	conn, err := db.Init()
 	if err != nil {
 		log.Println("Error initialising db: ", err)
@@ -30,10 +30,14 @@ func FindProjects(pattern string) ([]model.Project, error) {
     ON department.id = projects.dept
     INNER JOIN users
     ON users.id = projects.supervisor
-    WHERE projects.title LIKE ?
+    WHERE principal_investigator = ?
+    OR supervisor = ?
+    AND (
+    projects.title LIKE ?
     OR department.name LIKE ?
-    OR projects.brief LIKE ?
+    OR projects.brief LIKE ?)
     `,
+		userID, userID,
 		pattern, pattern, pattern,
 	)
 	if err != nil {
