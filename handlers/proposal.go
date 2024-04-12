@@ -70,6 +70,7 @@ func SubmitProposal(c echo.Context) error {
 	participant_type := form.Value["participant_type"]
 	recruitment_method := form.Value["recruitment_method"]
 	associated_documents, _ := c.FormFile("associated_documents")
+	proposal := c.FormValue("proposal")
 
 	if c.FormValue("p_has_other") == "true" {
 		purpose = append(purpose, c.FormValue("other_purpose"))
@@ -105,6 +106,7 @@ func SubmitProposal(c echo.Context) error {
 		RecruitmentMethod:    recruitment_method,
 		DocumentPath:         associated_documents.Filename,
 		PrincipalID:          principal_id,
+		Proposal:             proposal,
 	}
 
 	err = actions.SubmitProposal(project)
@@ -112,5 +114,5 @@ func SubmitProposal(c echo.Context) error {
 		return c.String(http.StatusInternalServerError, "Project not added!")
 	}
 
-	return c.String(http.StatusOK, "Project added successfully!")
+	return c.Redirect(http.StatusSeeOther, "/dashboard")
 }
