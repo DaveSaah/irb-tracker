@@ -5,7 +5,6 @@ import (
 	"database/sql"
 	"fmt"
 	"os"
-	"time"
 
 	"github.com/go-sql-driver/mysql"
 )
@@ -20,8 +19,6 @@ func Init() (*sql.DB, error) {
 		Addr:                 addr,
 		DBName:               os.Getenv("DBNAME"),
 		AllowNativePasswords: true,
-		ParseTime:            true,
-		Loc:                  time.UTC,
 	}
 
 	return sql.Open("mysql", cfg.FormatDSN())
