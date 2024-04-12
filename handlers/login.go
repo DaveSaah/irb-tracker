@@ -19,7 +19,7 @@ type loginData struct {
 func LoginView(c echo.Context) error {
 	_, isLoggedIn := helpers.CheckSession(c)
 	if isLoggedIn {
-		return DashboardView(c)
+		return c.Redirect(http.StatusSeeOther, "/dashboard")
 	}
 
 	return c.Render(http.StatusOK, "login", nil)
@@ -46,5 +46,5 @@ func LoginUser(c echo.Context) error {
 	}
 
 	helpers.CreateSession(&user, c)
-	return DashboardView(c)
+	return c.Redirect(http.StatusSeeOther, "/dashboard")
 }
