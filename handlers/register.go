@@ -30,7 +30,7 @@ var depts, _ = functions.FetchDepts()
 func RegisterView(c echo.Context) error {
 	_, isLoggedIn := helpers.CheckSession(c)
 	if isLoggedIn {
-		return DashboardView(c)
+		return c.Redirect(http.StatusSeeOther, "/dashboard")
 	}
 
 	return c.Render(http.StatusOK, "register", registerData{Depts: depts})
