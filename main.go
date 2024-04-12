@@ -45,6 +45,15 @@ func main() {
 	e.GET("/proposal", handlers.ProposalView)
 	e.POST("/proposal", handlers.SubmitProposal)
 
+	project := e.Group("/project")
+	project.GET("", handlers.ProjectView)
+	project.GET("/info", handlers.ProjectInfo)
+	project.GET("/messages", handlers.ProjectMsg)
+	project.GET("/brief", handlers.ProjectBrief)
+	project.GET("/timeline", handlers.ProjectTimeline)
+	project.GET("/participants", handlers.ProjectParticipants)
+	project.GET("/review", handlers.ProjectReview)
+
 	// start server with logger
 	e.Logger.Fatal(e.Start(":42069"))
 }
