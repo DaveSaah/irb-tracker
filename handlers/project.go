@@ -52,10 +52,6 @@ func ProjectInfo(c echo.Context) error {
 	)
 }
 
-func ProjectMsg(c echo.Context) error {
-	return c.Render(http.StatusOK, "messages", nil)
-}
-
 func ProjectBrief(c echo.Context) error {
 	sess, _ := helpers.CheckSession(c)
 

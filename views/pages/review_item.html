@@ -72,7 +72,7 @@
         </button>
         <button
           class="bg-gray-200 px-3 py-1 rounded-md shadow-md"
-          hx-get="/project/messages?id={{ .Project.ID }}"
+          hx-get="/review/messages?id={{ .Project.ID }}"
           hx-target="#content"
         >
           Messages
@@ -198,7 +198,3 @@
   </div>
 </div>
 {{ end }}
-
-<!--  -->
-
-{{ block "messages" . }} messages {{ end }}

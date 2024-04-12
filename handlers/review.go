@@ -120,10 +120,6 @@ func ReviewInfo(c echo.Context) error {
 	)
 }
 
-func ReviewMsg(c echo.Context) error {
-	return c.Render(http.StatusOK, "messages", nil)
-}
-
 func ReviewBrief(c echo.Context) error {
 	sess, _ := helpers.CheckSession(c)
 

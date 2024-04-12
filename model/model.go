@@ -23,6 +23,11 @@ type Supervisor struct {
 	ID   int
 }
 
+type Status struct {
+	Name string
+	ID   int
+}
+
 type User struct {
 	FName      string
 	LName      string

@@ -48,10 +48,10 @@
       <textarea
         class="p-2 w-full rounded"
         name="brief"
-        placeholder="Provide a brief description of the project (250 - 300 characters)"
+        placeholder="Provide a brief description of the project (200 - 300 characters)"
         rows="3"
         cols=""
-        minlength="250"
+        minlength="200"
         maxlength="300"
         required
       ></textarea>
@@ -91,7 +91,7 @@
       Section 1.1: Research Proposal Summary
     </h1>
     <p class="w-1/2 text-lg">
-      Provide a summary proposal of your research (min 600 characters). Be
+      Provide a summary proposal of your research (min 300 characters). Be
       concise in providing context and relevant information. You will submit a
       PDF with the details of your research proposal at the end of the form.
     </p>
@@ -100,7 +100,7 @@
       name="proposal"
       rows="8"
       cols=""
-      minlength="600"
+      minlength="300"
     ></textarea>
 
     <h1 class="text-2xl py-3 font-semibold">Section 2: Start and End Dates</h1>
@@ -295,7 +295,7 @@
       </ul>
       <div class="flex flex-col items-start w-1/2 gap-y-3">
         Upload a zip file
-        <input type="file" accept=".zip" name="associated_documents" />
+        <input type="file" accept=".zip" name="associated_documents" required />
       </div>
     </div>
     <input

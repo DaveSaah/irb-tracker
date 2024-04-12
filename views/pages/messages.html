@@ -1,0 +1,35 @@
+{{ block "messages" . }}
+<div class="flex flex-col items-center w-full">
+  <h1 class="text-2xl font-semibold self-start">Give your review</h1>
+  <div id="msg" class="flex flex-col">
+    <div>
+      <p class="bg-slate-200 py-1 px-3 rounded">Hello how are you?</p>
+      <p class="text-right text-sm text-red-500">
+        {{ index .Session.Values "username" }}
+      </p>
+    </div>
+  </div>
+  <form class="mt-20 flex justify-center items-center gap-x-2">
+    <textarea
+      class="border-2 border-primary-blue p-2 rounded-xl"
+      name="msg"
+      placeholder="Write your review"
+      rows="1"
+      cols="50"
+      required
+    ></textarea>
+    <select name="status" class="p-2 w-full bg-slate-300 rounded" required>
+      <option value="">-- update proposal status --</option>
+      {{ range .Status }}
+      <option value="{{ .ID }}">{{ .Name }}</option>
+      {{ end }}
+    </select>
+    <input
+      type="submit"
+      name="submit"
+      value="send"
+      class="cursor-pointer py-2 px-3 bg-primary-blue rounded-lg"
+    />
+  </form>
+</div>
+{{ end }}
