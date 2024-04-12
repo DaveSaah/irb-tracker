@@ -12,6 +12,7 @@
       <div class="table-cell bg-gray-300 py-2 pl-3">Department</div>
       <div class="table-cell bg-gray-300 py-2 pl-3">Date submitted</div>
       <div class="table-cell bg-gray-300 py-2 pl-3">Supervisor</div>
+      <div class="table-cell bg-gray-300 py-2 pl-3">Action</div>
     </div>
   </div>
   {{ range .Projects }}
@@ -22,6 +23,16 @@
       <div class="table-cell border-b py-2 px-3">{{ .Department }}</div>
       <div class="table-cell border-b py-2 px-3">{{ .DateSubmitted }}</div>
       <div class="table-cell border-b py-2 px-3">{{ .Supervisor }}</div>
+      <div class="table-cell border-b py-2 px-3">
+        <button
+          type="button"
+          class="py-1 px-3 bg-primary-blue rounded-md"
+          hx-get="/project?id={{ .ID }}"
+          hx-target="#dashboard-content"
+        >
+          view
+        </button>
+      </div>
     </div>
   </div>
   {{ end }}
