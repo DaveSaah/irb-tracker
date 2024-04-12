@@ -35,12 +35,12 @@ func main() {
 
 	e.GET("/dashboard", handlers.DashboardView)
 	e.GET("/projects", handlers.ProjectsView)
-	e.GET("/review", handlers.ReviewView)
 
 	e.POST("/logout", handlers.LogoutUser)
 
 	search := e.Group("/search")
 	search.POST("/projects", handlers.ProjectSearch)
+	search.POST("/review", handlers.ReviewSearch)
 
 	e.GET("/proposal", handlers.ProposalView)
 	e.POST("/proposal", handlers.SubmitProposal)
@@ -53,6 +53,14 @@ func main() {
 	project.GET("/timeline", handlers.ProjectTimeline)
 	project.GET("/participants", handlers.ProjectParticipants)
 	project.GET("/review", handlers.ProjectReview)
+
+	review := e.Group("/review")
+	review.GET("", handlers.ReviewView)
+	review.GET("/info", handlers.ReviewInfo)
+	review.GET("/messages", handlers.ReviewMsg)
+	review.GET("/brief", handlers.ReviewBrief)
+	review.GET("/timeline", handlers.ReviewTimeline)
+	review.GET("/participants", handlers.ReviewParticipants)
 
 	// start server with logger
 	e.Logger.Fatal(e.Start(":42069"))
