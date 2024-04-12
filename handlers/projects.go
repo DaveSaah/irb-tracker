@@ -6,11 +6,12 @@ import (
 	"github.com/boring-school-work/irb-tracker/functions"
 	"github.com/boring-school-work/irb-tracker/helpers"
 	"github.com/boring-school-work/irb-tracker/model"
+	"github.com/boring-school-work/irb-tracker/types"
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo/v4"
 )
 
-type projectData struct {
+type projectsData struct {
 	Session        *sessions.Session
 	Error          string
 	Projects       []model.Project
@@ -35,28 +36,28 @@ func ProjectsView(c echo.Context) error {
 		return err
 	}
 
-	submitted_count, err := functions.GetProjectCount(id, functions.StatusSubmitted)
+	submitted_count, err := functions.GetProjectCount(id, types.StatusSubmitted)
 	if err != nil {
 		return err
 	}
 
-	approved_count, err := functions.GetProjectCount(id, functions.StatusApproved)
+	approved_count, err := functions.GetProjectCount(id, types.StatusApproved)
 	if err != nil {
 		return err
 	}
 
-	rejected_count, err := functions.GetProjectCount(id, functions.StatusRejected)
+	rejected_count, err := functions.GetProjectCount(id, types.StatusRejected)
 	if err != nil {
 		return err
 	}
 
-	pending_count, err := functions.GetProjectCount(id, functions.StatusPending)
+	pending_count, err := functions.GetProjectCount(id, types.StatusPending)
 	if err != nil {
 		return err
 	}
 
 	return c.Render(http.StatusOK, "projects",
-		projectData{
+		projectsData{
 			Session:        sess,
 			UserInfo:       userinfo,
 			SubmittedCount: submitted_count,
@@ -70,18 +71,21 @@ func ProjectsView(c echo.Context) error {
 // ProjectSearch will return a list of projects that match a
 // specified pattern
 func ProjectSearch(c echo.Context) error {
+	sess, _ := helpers.CheckSession(c)
 	pattern := c.FormValue("search")
+
+	id := sess.Values["id"].(int)
 
 	if pattern == "" {
 		return nil
 	}
 
-	data, err := functions.FindProjects(pattern)
+	data, err := functions.FindProjects(id, pattern)
 	if err != nil {
 		return c.Render(http.StatusBadRequest, "project_result",
-			projectData{Error: "Could not find any match"},
+			projectsData{Error: "Could not find any match"},
 		)
 	}
 
-	return c.Render(http.StatusOK, "project_result", projectData{Projects: data})
+	return c.Render(http.StatusOK, "project_result", projectsData{Projects: data})
 }
