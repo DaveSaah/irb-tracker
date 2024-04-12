@@ -1,0 +1,204 @@
+{{ block "review_item" . }}
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IRB Tracker</title>
+    <script src="js/htmx.min.js"></script>
+    <script src="js/custom.js"></script>
+    <link rel="stylesheet" href="css/index.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "primary-red": "#FF0307",
+              "primary-text": "#000908",
+              "primary-bg": "#FBFFFE",
+              "primary-blue": "#91A6FF",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-primary-bg text-primary-text">
+    <main class="px-4 pb-8">
+      <button
+        class="flex self-start items-center py-3 gap-x-3 hover:text-blue-700"
+        hx-get="/review"
+        hx-target="#dashboard-content"
+      >
+        <img
+          src="images/left-arrow.svg"
+          class="object-contain w-6 h-6"
+          alt="left arrow"
+        />
+        Go back to reviews
+      </button>
+      <div class="flex justify-between py-3">
+        <h1 class="text-3xl font-bold">Project Title</h1>
+        <div class="text-lg">
+          <div class="flex gap-x-2 items-center">
+            <svg class="h-5 w-5 rounded-md">
+              {{ if eq .Project.Status "Pending" }}
+              <rect class="h-5 w-5 fill-gray-500" />
+              {{ end }} {{ if eq .Project.Status "Approved" }}
+              <rect class="h-5 w-5 fill-green-500" />
+              {{ end }} {{ if eq .Project.Status "Rejected" }}
+              <rect class="h-5 w-5 fill-red-500" />
+              {{ end }}
+            </svg>
+            {{ .Project.Status }}
+          </div>
+        </div>
+      </div>
+      <div class="leading-6 pb-3 border-b-4">
+        <p><span>Department: </span>{{ .Project.Department }}</p>
+        <p>
+          <span>Principal Investigator: </span>{{ .Project.PrincipalInvestigator
+          }}
+        </p>
+      </div>
+      <div class="py-8">
+        <button
+          class="mr-4 bg-gray-200 px-3 py-1 rounded-md shadow-md"
+          hx-get="/review/info?id={{ .Project.ID }}"
+          hx-target="#content"
+        >
+          Project info
+        </button>
+        <button
+          class="bg-gray-200 px-3 py-1 rounded-md shadow-md"
+          hx-get="/project/messages?id={{ .Project.ID }}"
+          hx-target="#content"
+        >
+          Messages
+        </button>
+      </div>
+      <div id="content" class="flex">{{ template "project_content" . }}</div>
+    </main>
+  </body>
+</html>
+{{ end }}
+
+<!--  -->
+
+{{ block "project_content" . }}
+<div class="w-5/6">
+  <h1 class="text-xl font-semibold">Project Overview</h1>
+  <p>An overview of the project, goals and outcomes.</p>
+  <nav class="w-full flex gap-x-3 pb-3 pt-5">
+    <button
+      class="mr-4 bg-gray-100 px-3 py-1 rounded-md shadow-md"
+      hx-get="/review/brief?id={{ .Project.ID }}"
+      hx-target="#nav_content"
+    >
+      Project brief
+    </button>
+    <button
+      class="mr-4 bg-gray-100 px-3 py-1 rounded-md shadow-md"
+      hx-get="/review/timeline?id={{ .Project.ID }}"
+      hx-target="#nav_content"
+    >
+      Timeline
+    </button>
+    <button
+      class="mr-4 bg-gray-100 px-3 py-1 rounded-md shadow-md"
+      hx-get="/review/participants?id={{ .Project.ID }}"
+      hx-target="#nav_content"
+    >
+      Participants Info
+    </button>
+  </nav>
+  <div id="nav_content" class="py-4 ml-5 w-1/2">
+    {{ template "project_brief" . }}
+  </div>
+  <div
+    class="flex justify-center items-center border-b-2 border-gray-300 mx-96"
+  ></div>
+  <div class="flex flex-col gap-y-3 pt-5 ml-5">
+    <div>
+      <h3 class="text-2xl">Proposal</h3>
+      <p>{{ .Project.Proposal }}</p>
+    </div>
+    <div>
+      <h3 class="text-2xl">Purpose</h3>
+      <ul class="list-disc ml-10">
+        {{ range .Project.Purpose }}
+        <li>{{.}}</li>
+        {{ end }}
+      </ul>
+    </div>
+    <div>
+      <h3 class="text-2xl">Other Investigators</h3>
+      <ul class="list-disc ml-10">
+        {{ range .Project.Investigators }}
+        <li>{{.}}</li>
+        {{ end }}
+      </ul>
+    </div>
+    <div>
+      <h3 class="text-2xl">Results Dissemination</h3>
+      <ul class="list-disc ml-10">
+        {{ range .Project.ResultsDissemination }}
+        <li>{{.}}</li>
+        {{ end }}
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="w-1/6">
+  <h3 class="text-xl font-semibold">Submitted Document</h3>
+</div>
+{{ end }}
+
+<!--  -->
+
+{{ block "project_brief" . }} {{ .Project.Brief }} {{ end }}
+
+<!--  -->
+
+{{ block "timeline" . }}
+<div>
+  <p class="font-semibold underline">Duration</p>
+  <p>Start date: {{ .Project.StartDate }}</p>
+  <p>End date: {{ .Project.EndDate }}</p>
+  <p>Submitted date: {{ .Project.DateSubmitted}}</p>
+</div>
+{{ end }}
+
+<!--  -->
+
+{{ block "participants_info" . }}
+<div class="flex justify-evenly">
+  <div>
+    <p>
+      <span class="font-semibold underline">Number of participants:</span> {{
+      .Project.ParticipantCount }}
+    </p>
+  </div>
+  <div>
+    <p class="font-semibold underline">Type of participants:</p>
+    <ul class="list-disc ml-8">
+      {{ range .Project.ParticipantType }}
+      <li>{{.}}</li>
+      {{ end }}
+    </ul>
+  </div>
+  <div>
+    <p class="font-semibold underline">Recruitment Method:</p>
+    <ul class="list-disc ml-8">
+      {{ range .Project.RecruitmentMethod }}
+      <li>{{.}}</li>
+      {{ end }}
+    </ul>
+  </div>
+</div>
+{{ end }}
+
+<!--  -->
+
+{{ block "messages" . }} messages {{ end }}
