@@ -1,3 +1,30 @@
 {{block "review" .}}
-<div>review</div>
+<div>
+  <h1 class="text-4xl font-semibold pb-3">Review Statistics</h1>
+  <div class="flex gap-x-10 text-lg">
+    <p>Approved: {{ .ApprovedCount }}</p>
+    <p>Rejected: {{ .RejectedCount }}</p>
+    <p>Pending: {{ .PendingCount }}</p>
+  </div>
+  <div class="flex gap-x-2 pb-2">
+    <h3 class="text-3xl pt-5 pb-2">Find a project to review</h3>
+    <img
+      id="spinner"
+      src="images/bars.svg"
+      alt="loading"
+      class="htmx-indicator w-5"
+    />
+  </div>
+  <input
+    class="w-full p-3 rounded-md border-2 border-primary-blue"
+    type="search"
+    name="search"
+    placeholder="Search for a project title"
+    hx-post="/search/review"
+    hx-trigger="keyup changed delay:500ms"
+    hx-target="#project-review-results"
+    hx-indicator=".htmx-indicator"
+  />
+  <span id="project-review-results"> {{ template "review_result" . }} </span>
+</div>
 {{end}}
