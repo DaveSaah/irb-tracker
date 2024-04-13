@@ -66,7 +66,7 @@ func DashboardView(c echo.Context) error {
 			RejectedPercent: rejected_percent,
 			Session:         sess,
 			SubmittedCount:  submitted_count,
-			ApprovedCount:   approved_percent,
+			ApprovedCount:   approved_count,
 			RejectedCount:   rejected_count,
 			Proposals:       proposals,
 		},

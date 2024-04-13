@@ -24,7 +24,7 @@ func FetchProject(userID, projID int) (model.Project, error) {
     SELECT projects.id, title, department.name, CONCAT(fname, " ", lname),
     brief, start_date, end_date, participants_count, participants_type,
     recuitment_method, proposal, purpose, other_investigators, 
-    results_dissemination, status.sname,
+    results_dissemination, status.sname
     FROM projects
     INNER JOIN department
     ON department.id = projects.dept
