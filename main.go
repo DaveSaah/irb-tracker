@@ -61,6 +61,7 @@ func main() {
 	review.GET("/brief", handlers.ReviewBrief)
 	review.GET("/timeline", handlers.ReviewTimeline)
 	review.GET("/participants", handlers.ReviewParticipants)
+	review.POST("/update", handlers.ReviewUpdate)
 
 	// start server with logger
 	e.Logger.Fatal(e.Start(":42069"))
