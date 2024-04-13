@@ -113,7 +113,7 @@ func ReviewInfo(c echo.Context) error {
 		return err
 	}
 
-	return c.Render(http.StatusOK, "project_content",
+	return c.Render(http.StatusOK, "project_review_content",
 		projectData{
 			Project: project,
 		},
@@ -132,7 +132,7 @@ func ReviewBrief(c echo.Context) error {
 		return err
 	}
 
-	return c.Render(http.StatusOK, "project_brief",
+	return c.Render(http.StatusOK, "project_review_brief",
 		projectData{
 			Project: project,
 		},
@@ -153,7 +153,7 @@ func ReviewTimeline(c echo.Context) error {
 
 	log.Printf("Date submitted: %s", project.DateSubmitted)
 
-	return c.Render(http.StatusOK, "timeline",
+	return c.Render(http.StatusOK, "review_timeline",
 		projectData{
 			Project: project,
 		},
@@ -172,7 +172,7 @@ func ReviewParticipants(c echo.Context) error {
 		return err
 	}
 
-	return c.Render(http.StatusOK, "participants_info",
+	return c.Render(http.StatusOK, "review_participants_info",
 		projectData{
 			Project: project,
 		},

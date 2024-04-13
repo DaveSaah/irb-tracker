@@ -78,7 +78,9 @@
           Messages
         </button>
       </div>
-      <div id="content" class="flex">{{ template "project_content" . }}</div>
+      <div id="content" class="flex">
+        {{ template "project_review_content" . }}
+      </div>
     </main>
   </body>
 </html>
@@ -86,7 +88,7 @@
 
 <!--  -->
 
-{{ block "project_content" . }}
+{{ block "project_review_content" . }}
 <div class="w-5/6">
   <h1 class="text-xl font-semibold">Project Overview</h1>
   <p>An overview of the project, goals and outcomes.</p>
@@ -114,7 +116,7 @@
     </button>
   </nav>
   <div id="nav_content" class="py-4 ml-5 w-1/2">
-    {{ template "project_brief" . }}
+    {{ template "project_review_brief" . }}
   </div>
   <div
     class="flex justify-center items-center border-b-2 border-gray-300 mx-96"
@@ -157,11 +159,11 @@
 
 <!--  -->
 
-{{ block "project_brief" . }} {{ .Project.Brief }} {{ end }}
+{{ block "project_review_brief" . }} {{ .Project.Brief }} {{ end }}
 
 <!--  -->
 
-{{ block "timeline" . }}
+{{ block "review_timeline" . }}
 <div>
   <p class="font-semibold underline">Duration</p>
   <p>Start date: {{ .Project.StartDate }}</p>
@@ -172,7 +174,7 @@
 
 <!--  -->
 
-{{ block "participants_info" . }}
+{{ block "review_participants_info" . }}
 <div class="flex justify-evenly">
   <div>
     <p>

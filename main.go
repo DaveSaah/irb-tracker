@@ -58,7 +58,7 @@ func main() {
 	review.GET("", handlers.ReviewView)
 	review.GET("/info", handlers.ReviewInfo)
 	review.GET("/messages", handlers.ReviewMsg)
-	review.GET("/brief", handlers.ReviewBrief)
+	// review.GET("/brief", handlers.ReviewBrief)
 	review.GET("/timeline", handlers.ReviewTimeline)
 	review.GET("/participants", handlers.ReviewParticipants)
 	review.POST("/update", handlers.ReviewUpdate)
