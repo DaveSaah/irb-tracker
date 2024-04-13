@@ -32,7 +32,7 @@ func ReviewMsg(c echo.Context) error {
 
 	sess, _ := helpers.CheckSession(c)
 
-	return c.Render(http.StatusOK, "messages",
+	return c.Render(http.StatusOK, "review_messages",
 		msgData{
 			Status:  status,
 			Session: sess,
